@@ -16,7 +16,7 @@ function App() {
 	  <Route element={<Layout/>}>
 	  <Route path="/" element={<Content/>} />
 	  <Route path="/login" element={<Login/>}/>
-	  </Route>
+	</Route>
     </Routes>
 	  </ColorProvider>
 	  </UserProvider>

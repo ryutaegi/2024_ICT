@@ -32,17 +32,18 @@ ${media.tablet`width:200px;}`};
 `
 
 const Logo = styled.div`
-background:gray;
+text-align : center;
 width : 100%;
-padding-bottom : 100%;
-border-radius : 100px;
+padding-top : 100%;
+color : ${props => props.color};
+font-size : 35px;
 `;
 
 const Button = styled.button`
-background:white;
-color: black;
+background:${props => props.color};
+color: ${props => props.dark ? 'dark' : 'white'};
+border : none;
 border-radius : 4px;
-box-sizing : 1rem;
 font-weight : 600;
 width : 100%;
 &:hover {
@@ -53,7 +54,6 @@ ${props =>
 	props.inverted &&
 	css`
 	background: none;
-	border: 2px solid white;
 	color: white;
 	&:hover {
 	background:white;
@@ -145,9 +145,9 @@ const postLogin = async () => {
         
 	}};
 	return (
-		<Box color={user.dark == true ? state.color : state.subcolor}>
-		<Logo>
-		logo
+		<Box color={user.dark == true ? state.color : 'white'}>
+		<Logo color={state.color}>
+		Welcome to ICT
 		</Logo>
 		<div>
 
@@ -167,7 +167,7 @@ const postLogin = async () => {
 		type='password'
 		onChange={e=> setPw(e.target.value)}
 		placeholder="비밀번호를 입력하세요" style={{width : "100%"}}/>
-		<Button onClick={() => {
+		<Button dark={user.dark} color={state.subcolor2}  onClick={() => {
 			
 			postLogin();
 			
