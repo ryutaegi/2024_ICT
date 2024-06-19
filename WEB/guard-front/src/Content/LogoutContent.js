@@ -3,6 +3,8 @@ import { Link } from 'react-router-dom';
 import { useContext } from 'react';
 import UserContext from '../contexts/users';
 import ColorContext from '../contexts/color';
+import ImageSlider from '../component/ImageSlider';
+
 const Items = styled.div`
 width : 40%;
 flex-grow : 0;
@@ -20,7 +22,7 @@ const Container = styled.div`
 display : flex;
 justify-content : space-evenly;
 align-items : center;
-padding : 10px;
+padding : 0px;
 overflow: hidden;
 background-color : ${(props) => (props.dark ? 'gray' : props.color)};
 width : 100%;
@@ -32,7 +34,7 @@ const LogoutContent = () => {
 	const [user, setUser] = useContext(UserContext);
 	return (
 		<Container color={state.subcolor} dark={user.dark}>
-	<img style={{height : '120%'}} src="https://vrthumb.imagetoday.co.kr/2023/02/23/ta0149t000172.jpg"/>	
+		<ImageSlider/>
 		</Container>
 	)
 }
