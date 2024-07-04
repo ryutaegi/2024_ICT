@@ -102,7 +102,7 @@ const postLogin = async () => {
                 }
             });
             console.log("signin:", response);
-		setUser((prevUser) => ({ ...prevUser, login : true}));
+		setUser((prevUser) => ({ ...prevUser, login : true, MACid : id}));
 		alert("websocket connected");
             
         } catch (error) {

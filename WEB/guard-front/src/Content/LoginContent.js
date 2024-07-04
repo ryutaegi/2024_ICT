@@ -35,23 +35,34 @@ const LoginContent = () => {
 	const { state } = useContext(ColorContext);
 	const [user, setUser] = useContext(UserContext);
 
-const [messages, setMessages] = useState([]);
-  const [input, setInput] = useState('');
+
+  const [roomStatus, setRoomStatus] = useState('');
+
+  const joinOrCreateRoom = () => {
+    socket.emit('joinOrCreateRoom', user.MACid);
+	  alert(user.MACid)
+  };
 
   useEffect(() => {
-    socket.on('message', (message) => {
-      setMessages((prevMessages) => [...prevMessages, message]);
+	  alert('socket');
+	  joinOrCreateRoom();
+    socket.on('roomJoined', (room) => {
+      setRoomStatus(`Joined room ${room} successfully`);
+    alert('socketon');
+    });
+
+    socket.on('error', (message) => {
+      setRoomStatus(`Error: ${message}`);
     });
 
     return () => {
-      socket.off('message');
+      socket.off('roomJoined');
+      socket.off('error');
     };
   }, []);
 
-  const sendMessage = () => {
-    socket.emit('message', input);
-    setInput('');
-  };
+
+
 	return (
 		<Container dark={user.dark}>
 		<Items dark={user.dark} color={state.color}>
@@ -63,12 +74,8 @@ const [messages, setMessages] = useState([]);
 		<Items dark={user.dark} color={state.color}>
 		로그
 	<div>
-        {messages.map((msg, index) => (
-          <div key={index}>{msg}</div>
-        ))}
+	{roomStatus}
       </div>
-      <input value={input} onChange={(e) => setInput(e.target.value)} />
-      <button onClick={sendMessage}>Send</button>
 		</Items>
 		<Items dark={user.dark} color={state.color}>
 		컨트롤러
