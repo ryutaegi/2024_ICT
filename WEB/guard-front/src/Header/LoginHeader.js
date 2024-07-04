@@ -36,13 +36,13 @@ text-align : center;
 width : 100%;
 height : 40px;
 padding-top : 50%;
-color : ${props => props.color};
+color : ${props => props.dark == true ? 'white' :  props.color};
 font-size : 20px;
 `;
 
 const Button = styled.button`
-background:${props => props.color};
-color: ${props => props.dark ? 'dark' : 'white'};
+background:${props => props.dark ? 'dark' : props.color};
+color: ${props => props.dark ? 'white' : 'white'};
 border : 0;
 margin-top : 5px;
 border-radius : 4px;
@@ -111,7 +111,7 @@ const postLogin = async () => {
         
 	}};
 	return (
-		<Box color={user.dark == true ? state.color : 'white'}>
+		<Box color={user.dark == true ? 'black' : 'white'}>
 		<Logo color={state.color}>
 		Welcome to ICT
 		</Logo>

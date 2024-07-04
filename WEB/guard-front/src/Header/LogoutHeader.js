@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import ColorContext from '../contexts/color';
 import { useContext } from 'react';
 import UserContext from '../contexts/users';
+import DarkToggle from '../component/DarkToggle';
 
 const sizes = {
 	desktop :1024,
@@ -31,10 +32,12 @@ ${media.tablet`width:200px;}`};
 `
 
 const Logo = styled.div`
-background:gray;
+text-align : center;
 width : 100%;
-padding-bottom : 100%;
-border-radius : 100px;
+height : 40px;
+padding-top : 50%;
+color : ${props => props.dark == true ? 'white' : props.color};
+font-size : 20px;
 `;
 
 const Button = styled.button`
@@ -79,23 +82,25 @@ width : 100%;
 margin-bottom : 5px;
 border : 0;
 color : white;
-background-color : black;
+background-color : ${props => props.dark == true ? 'black'  :  props.color};
 `;
 
 
 const LogoutHeader = () => {
 	
+	const {state} = useContext(ColorContext)
 	const [user, setUser] = useContext(UserContext);
 	return (
-		<Box color="black">
-		<Logo>
-		logo
+		<Box dark={user.dark} color={user.dark == true ? 'black' : state.color}>
+		<Logo dark={user.dark} color={state.subcolor}>
+		hello, world!
 		</Logo>
 		<div>
-		<MenuList>
+		<DarkToggle/>
+		<MenuList dark={user.dark} color={state.color}>
 		이름 변경
 		</MenuList>
-		<MenuList>
+		<MenuList dark={user.dark} color={state.color}>
 		비밀번호 변경
 		</MenuList>
 		<Button onClick={() => {setUser((prevUser) => ({...prevUser, login : false}))}}>

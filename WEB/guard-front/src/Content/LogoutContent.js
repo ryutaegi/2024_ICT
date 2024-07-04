@@ -24,7 +24,7 @@ justify-content : space-evenly;
 align-items : center;
 padding : 0px;
 overflow: hidden;
-background-color : ${(props) => (props.dark ? 'gray' : props.color)};
+background-color : ${(props) => (props.dark ? 'gray' : 'white')};
 width : 100%;
 `;
 
