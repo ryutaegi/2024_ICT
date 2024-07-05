@@ -39,7 +39,7 @@ const LoginContent = () => {
   const [roomStatus, setRoomStatus] = useState('');
 
   const joinOrCreateRoom = () => {
-    socket.emit('joinOrCreateRoom', user.MACid);
+    socket.emit('joinOrCreateRoom', [user.MACid, 1]);
 	  alert(user.MACid)
   };
 

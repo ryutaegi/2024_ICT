@@ -29,8 +29,9 @@ export class AppGateway implements OnGatewayInit, OnGatewayConnection, OnGateway
   }
 
   @SubscribeMessage('joinOrCreateRoom')
-  handleJoinOrCreateRoom(client: Socket,  macAddress: string ): void {
-    console.log(macAddress);
+  handleJoinOrCreateRoom(client: Socket, data:[ string, number] ): void {
+    const [macAddress, isMobile] = data;
+	  console.log(macAddress, isMobile);
     if (!this.rooms.has(macAddress)) {
       this.rooms.set(macAddress, []);
       console.log(`Room created: ${macAddress}`);
