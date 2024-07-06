@@ -43,9 +43,9 @@ export class AppGateway implements OnGatewayInit, OnGatewayConnection, OnGateway
   }
 
   @SubscribeMessage('message')
-  handleMessage(client: Socket, payload: any): string {
-    console.log(payload);
-    this.server.emit('message', payload);
+  handleMessage(client: Socket, data: {room : string, datas : any}) {
+    console.log(data);
+    this.server.to(data.room).emit('message', data);
     return 'websocket connected';
   }
 }

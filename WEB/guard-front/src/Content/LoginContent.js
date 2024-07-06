@@ -34,7 +34,7 @@ const socket = io(process.env.REACT_APP_SERVER_WEBSOCKET);
 const LoginContent = () => {
 	const { state } = useContext(ColorContext);
 	const [user, setUser] = useContext(UserContext);
-
+const [controlData, setControlData] = useState([0,0,0]);
 
   const [roomStatus, setRoomStatus] = useState('');
 
@@ -43,6 +43,10 @@ const LoginContent = () => {
 	  alert(user.MACid)
   };
 
+
+const sendControlData = () => {
+	socket.emit('message',{room : user.MACid, datas : controlData});
+}
   useEffect(() => {
 	  alert('socket');
 	  joinOrCreateRoom();
@@ -50,7 +54,7 @@ const LoginContent = () => {
       setRoomStatus(`Joined room ${room} successfully`);
     alert('socketon');
     });
-
+	sendControlData();
     socket.on('error', (message) => {
       setRoomStatus(`Error: ${message}`);
     });
