@@ -2,7 +2,7 @@ import { SubscribeMessage, WebSocketGateway, OnGatewayInit, OnGatewayConnection,
 import { Server, Socket } from 'socket.io';
 
 @WebSocketGateway(5024, { cors: { origin: '*' } })
-export class AppGateway implements OnGatewayInit, OnGatewayConnection, OnGatewayDisconnect {
+export class websocketGateway implements OnGatewayInit, OnGatewayConnection, OnGatewayDisconnect {
   @WebSocketServer() server: Server;
 
   private rooms: Map<string, string[]> = new Map(); // 맥 주소를 키로 하는 룸 목록
