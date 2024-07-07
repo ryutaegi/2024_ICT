@@ -45,7 +45,7 @@ const [controlData, setControlData] = useState([0,0,0]);
 
 
 const sendControlData = () => {
-	socket.emit('message',{room : user.MACid, datas : controlData});
+	socket.emit('message',{room : user.MACid, datas : {type : 1, datas : controlData}});
 }
   useEffect(() => {
 	  alert('socket');

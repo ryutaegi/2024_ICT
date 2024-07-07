@@ -5,7 +5,7 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { ConfigModule } from '@nestjs/config';
 import { AuthModule } from './auth/auth.module';
 import { UserModule } from './user/user.module';
-import { WebsocketModule } from './websocket/websocket.module';
+import { websocketModule } from './websocket/websocket.module';
 import { UserEntity } from './user/entities/user.entity';
 
 
@@ -24,7 +24,7 @@ import { UserEntity } from './user/entities/user.entity';
     }),
     AuthModule,
     UserModule,
-    WebsocketModule
+    websocketModule
   ],
   controllers: [AppController],
   providers: [AppService],
