@@ -55,11 +55,26 @@ const sendControlData = () => {
     alert('socketon');
     });
 	sendControlData();
+	socket.on('message',(datas) => {
+	const type = datas.type;
+	
+	if(type == 1){
+		alert("send controlData");
+	}
+	if(type == 2){
+	alert('type2 : ', datas.datas);
+	}
+	if(type == 3){
+	alert('type3 : ',datas.datas);
+	}
+	});
+	  
     socket.on('error', (message) => {
       setRoomStatus(`Error: ${message}`);
     });
 
     return () => {
+      socket.off('message');
       socket.off('roomJoined');
       socket.off('error');
     };

@@ -45,6 +45,7 @@ export class websocketGateway implements OnGatewayInit, OnGatewayConnection, OnG
   @SubscribeMessage('message')
   handleMessage(client: Socket, data: {room : string, datas : any}) {
     console.log(data);
+    console.log(data.datas);
     this.server.to(data.room).emit('message', data.datas);
     return 'websocket connected';
   }
