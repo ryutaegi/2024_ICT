@@ -1,11 +1,25 @@
 import { SubscribeMessage, WebSocketGateway, OnGatewayInit, OnGatewayConnection, OnGatewayDisconnect, WebSocketServer } from '@nestjs/websockets';
 import { Server, Socket } from 'socket.io';
+import {UserService} from 'src/user/user.service';
 
 @WebSocketGateway(5024, { cors: { origin: '*' } })
 export class websocketGateway implements OnGatewayInit, OnGatewayConnection, OnGatewayDisconnect {
   @WebSocketServer() server: Server;
 
   private rooms: Map<string, string[]> = new Map(); // 맥 주소를 키로 하는 룸 목록
+
+  constructor(private readonly userService: UserService ) {}
+async isMACid(macID: string): Promise<boolean> {
+  const user = await this.userService.findByMacID(macID);
+  if (!user) {
+    console.log("MACID no");
+    return false;
+  } else {
+    console.log("MACID yes");
+    return true;
+  }
+}
+
 
   afterInit(server: Server) {
     console.log('Init');
@@ -32,6 +46,9 @@ export class websocketGateway implements OnGatewayInit, OnGatewayConnection, OnG
   handleJoinOrCreateRoom(client: Socket, data:[ string, number] ): void {
     const [macAddress, isMobile] = data;
 	  console.log(macAddress, isMobile);
+
+  	this.isMACid(macAddress);
+
     if (!this.rooms.has(macAddress)) {
       this.rooms.set(macAddress, []);
       console.log(`Room created: ${macAddress}`);
