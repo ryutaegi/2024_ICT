@@ -14,6 +14,7 @@ const SocketIOComponent = () => {
     // Socket.IO 클라이언트 초기화 및 서버 연결
     const socketIo = io(SOCKET_SERVER_URL);
     setSocket(socketIo);
+
    
     socketIo.emit('joinOrCreateRoom', ['AA:11:BB:22:CC:33', 0]);
     socketIo.on('roomJoined', (room)=> {
@@ -31,7 +32,23 @@ const SocketIOComponent = () => {
     };
   }, []);
 
- 
+ 	 
+const encodeImageFileAsURL = (url) => {
+      return new Promise((resolve, reject) => {
+        const xhr = new XMLHttpRequest();
+        xhr.onload = () => {
+          const reader = new FileReader();
+          reader.onloadend = () => {
+            resolve(reader.result.split(',')[1]); // base64 데이터만 추출
+          };
+          reader.readAsDataURL(xhr.response);
+        };
+        xhr.open('GET', url);
+        xhr.responseType = 'blob';
+        xhr.send();
+      });
+    }; 
+	 
   // 메시지 전송 함수
   const sendMessage = () => {
     if (socket) {
@@ -39,6 +56,19 @@ const SocketIOComponent = () => {
       setInputMessage('');
     }
   };
+
+  const sendImage = () => {
+
+const imageUrl = `${process.env.SERVER_URL}/image/image.png`;
+
+    encodeImageFileAsURL(imageUrl).then((base64Data) => {
+      // 웹소켓을 통해 base64 데이터 전송
+      socket.emit('message', { room: 'AA:11:BB:22:CC:33', datas: { type: 2, datas: [base64Data, 'image/image.png'] } });
+    }).catch(error => {
+      console.error('Error encoding file:', error);
+    });
+
+  };	
 
   return (
     <div>
@@ -50,7 +80,8 @@ const SocketIOComponent = () => {
           onChange={(e) => setInputMessage(e.target.value)}
         />
         <button onClick={sendMessage}>Send</button>
-      </div>
+      <button onClick={sendImage}>imageSend</button>
+	  </div>
       <div>
         <h3>Messages:</h3>
         <ul>
