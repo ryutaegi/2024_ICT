@@ -37,7 +37,7 @@ const LoginContent = () => {
 const [controlData, setControlData] = useState([0,0,0]);
 
   const [roomStatus, setRoomStatus] = useState('');
-
+  const [base64Image, setBase64Image] = useState('');
   const joinOrCreateRoom = () => {
     socket.emit('joinOrCreateRoom', [user.MACid, 1]);
 	  alert(user.MACid)
@@ -47,6 +47,23 @@ const [controlData, setControlData] = useState([0,0,0]);
 const sendControlData = () => {
 	socket.emit('message',{room : user.MACid, datas : {type : 1, datas : controlData}});
 }
+
+const imageFlag = () => {
+setControlData((prev) => {
+const newPrev = [...prev];
+	newPrev[0] = 1;
+	return newPrev;
+});
+
+	setTimeout(() => {
+setControlData((prev) => {
+const reversePrev = [...prev];
+	reversePrev[0] = 0;
+	return reversePrev;
+});
+	} , 10000);
+};
+
   useEffect(() => {
 	  alert('socket');
 	  joinOrCreateRoom();
@@ -63,6 +80,10 @@ const sendControlData = () => {
 	}
 	if(type == 2){
 	alert('type2 : ', datas.datas);
+		setBase64Image(datas.datas[0]);
+		//setBase64Image("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAUAAAAFCAYAAACNbyblAAAAHElEQVQI12P4//8/w38GIAXDIBKE0DHxgljNBAAO9TXL0Y4OHwAAAABJRU5ErkJggg==");
+	alert(datas.datas[0]);
+	alert(base64Image);
 	}
 	if(type == 3){
 	alert('type3 : ',datas.datas);
@@ -84,8 +105,8 @@ const sendControlData = () => {
 
 	return (
 		<Container dark={user.dark}>
-		<Items dark={user.dark} color={state.color}>
-		영상(클릭하면 ..))
+		<Items onClick={imageFlag} dark={user.dark} color={state.color}>
+		<img src={`data:image/png;base64,${base64Image}`} style={{width : '50px', height : '50px'}}/>
 		</Items>
 		<Items dark={user.dark} color={state.color}>
 		지도
@@ -96,7 +117,7 @@ const sendControlData = () => {
 	{roomStatus}
       </div>
 		</Items>
-		<Items dark={user.dark} color={state.color}>
+		<Items onClick={sendControlData} dark={user.dark} color={state.color}>
 		컨트롤러
 		</Items>
 		</Container>

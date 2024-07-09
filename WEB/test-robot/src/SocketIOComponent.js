@@ -59,14 +59,14 @@ const encodeImageFileAsURL = (url) => {
 
   const sendImage = () => {
 
-const imageUrl = `${process.env.SERVER_URL}/image/image.png`;
-
-    encodeImageFileAsURL(imageUrl).then((base64Data) => {
+//const imageUrl = 'https://images.unsplash.com/photo-1616486250774-dc4033b3bb26?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=MnwzNjUyOXwwfDF8c2VhcmNofDl8fGxhcmdlJTIwYnVpbGRpbmd8ZW58MHx8fHwxNjg4NjM2Mzkz&ixlib=rb-4.0.3&q=80&w=1080';
+//alert(imageUrl);
+  //  encodeImageFileAsURL(imageUrl).then((base64Data) => {
       // 웹소켓을 통해 base64 데이터 전송
-      socket.emit('message', { room: 'AA:11:BB:22:CC:33', datas: { type: 2, datas: [base64Data, 'image/image.png'] } });
-    }).catch(error => {
-      console.error('Error encoding file:', error);
-    });
+      socket.emit('message', { room: 'AA:11:BB:22:CC:33', datas: { type: 2, datas: ['iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mP8/wcAAgIB/7kUJtAAAAAASUVORK5CYII=', 'image/image.png'] } });
+   // }).catch(error => {
+    //  console.error('Error encoding file:', error);
+    //});
 
   };	
 
