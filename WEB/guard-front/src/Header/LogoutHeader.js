@@ -86,7 +86,7 @@ background-color : ${props => props.dark == true ? 'black'  :  props.color};
 `;
 
 
-const LogoutHeader = () => {
+const LogoutHeader = ({OpenModal}) => {
 	
 	const {state} = useContext(ColorContext)
 	const [user, setUser] = useContext(UserContext);
@@ -100,7 +100,7 @@ const LogoutHeader = () => {
 		<MenuList dark={user.dark} color={state.color}>
 		이름 변경
 		</MenuList>
-		<MenuList dark={user.dark} color={state.color}>
+		<MenuList onClick={() => {setUser((prevUser) => ({...prevUser, pwModal : true}))}} dark={user.dark} color={state.color}>
 		비밀번호 변경
 		</MenuList>
 		<Button onClick={() => {setUser((prevUser) => ({...prevUser, login : false}))}}>

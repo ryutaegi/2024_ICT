@@ -4,6 +4,7 @@ import { useEffect, useState, useContext } from 'react';
 import UserContext from '../contexts/users';
 import ColorContext from '../contexts/color';
 import io from 'socket.io-client';
+import PasswordChangeModal from './Modal/PasswordChangeModal'
 
 const Items = styled.div`
 width : 40%;
@@ -36,6 +37,7 @@ const LoginContent = () => {
 	const [user, setUser] = useContext(UserContext);
 const [controlData, setControlData] = useState([0,0,0]);
 
+  
   const [roomStatus, setRoomStatus] = useState('');
   const [base64Image, setBase64Image] = useState('');
   const joinOrCreateRoom = () => {
@@ -105,6 +107,7 @@ const reversePrev = [...prev];
 
 	return (
 		<Container dark={user.dark}>
+		<PasswordChangeModal isOpen={user.pwModal} onClose={()=> setUser((prev) => ({...prev, pwModal : false}))}/>
 		<Items onClick={imageFlag} dark={user.dark} color={state.color}>
 		<img src={`data:image/png;base64,${base64Image}`} style={{width : '50px', height : '50px'}}/>
 		</Items>
@@ -117,8 +120,8 @@ const reversePrev = [...prev];
 	{roomStatus}
       </div>
 		</Items>
-		<Items onClick={sendControlData} dark={user.dark} color={state.color}>
-		컨트롤러
+		<Items dark={user.dark} color={state.color}>
+		<button onClick={sendControlData}>data send</button>
 		</Items>
 		</Container>
 	)

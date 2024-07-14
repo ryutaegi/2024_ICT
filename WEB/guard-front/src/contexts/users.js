@@ -8,7 +8,8 @@ const UserProvider = ({children}) => {
 		MACid : "",
 		password : "",
 		dark : false,
-		isMobile : false
+		isMobile : false,
+		pwModal : false
 	}
 	);
 	return (
