@@ -12,7 +12,7 @@ const Header = () => {
 	const [user, setUser] = useContext(UserContext);
 	return (
 	<div style={{display : 'flex', width : '200px'}}>
-		{user.login == false ? <LoginHeader/> : <LogoutHeader/>}
+		{user.login == false ? <LogoutHeader/> : <LoginHeader/>}
 	</div>
 
 	)

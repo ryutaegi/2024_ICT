@@ -1,10 +1,10 @@
 import styled, {css} from 'styled-components';
 import { Link } from 'react-router-dom';
 import ColorContext from '../contexts/color';
-import { useContext, useState } from 'react';
+import { useContext } from 'react';
 import UserContext from '../contexts/users';
-import axios from 'axios';
 import DarkToggle from '../component/DarkToggle';
+
 const sizes = {
 	desktop :1024,
 	tablet : 768
@@ -26,7 +26,7 @@ width: 1024px;
 display : flex;
 height : 100vh;
 flex-direction : column;
-justify-content : center;
+justify-content : space-between;
 ${media.desktop`width:200px;`}
 ${media.tablet`width:200px;}`};
 `
@@ -36,20 +36,18 @@ text-align : center;
 width : 100%;
 height : 40px;
 padding-top : 50%;
-color : ${props => props.dark == true ? 'white' :  props.color};
+color : ${props => props.dark == true ? 'white' : props.color};
 font-size : 20px;
 `;
 
 const Button = styled.button`
-background:${props => props.dark ? 'dark' : props.color};
-color: ${props => props.dark ? 'white' : 'white'};
-border : 0;
-margin-top : 5px;
+background:white;
+color: black;
 border-radius : 4px;
+box-sizing : 1rem;
 font-weight : 600;
-font-size : 15px;
 width : 100%;
-height : 30px;
+margin-top : 10px;
 &:hover {
 background : rgba(255,255,255,0.9);
 }
@@ -58,6 +56,7 @@ ${props =>
 	props.inverted &&
 	css`
 	background: none;
+	border: 2px solid white;
 	color: white;
 	&:hover {
 	background:white;
@@ -78,63 +77,35 @@ justify-content : center;
 font-size : 5rem;
 `;
 
+const MenuList = styled.button`
+width : 100%;
+margin-bottom : 5px;
+border : 0;
+color : white;
+background-color : ${props => props.dark == true ? 'black'  :  props.color};
+`;
+
 
 const LoginHeader = () => {
-	const [id, setId] = useState("");
-	const [pw, setPw] = useState("");
-	const {state} = useContext(ColorContext);
-	const [user, setUser] = useContext(UserContext);
-
-
 	
-const postLogin = async () => {
-
-	try {
-            const response = await axios({
-                method: 'post',
-                url: '/signin',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                data: {
-                    "macID": id,
-                    "password": pw
-                }
-            });
-            console.log("signin:", response);
-		setUser((prevUser) => ({ ...prevUser, login : true, MACid : id}));
-		alert("websocket connected");
-            
-        } catch (error) {
-            alert("로그인 실패 "+error);
-            console.error("error", error);
-        
-	}};
+	const {state} = useContext(ColorContext)
+	const [user, setUser] = useContext(UserContext);
 	return (
-		<Box color={user.dark == true ? 'black' : 'white'}>
-		<Logo color={state.color}>
-		Welcome to ICT
+		<Box dark={user.dark} color={user.dark == true ? 'black' : state.color}>
+		<Logo dark={user.dark} color={state.subcolor}>
+		hello, world!
 		</Logo>
 		<div>
-	
-		<input
-		value={id}
-		onChange={e => setId(e.target.value)}
-		placeholder="MAC주소를 입력하세요" style={{width : "92%", height : '20px', marginBottom : "5px", border : "0.5px solid gray", borderRadius : "0px"}}/>
-		<input 
-		value={pw}
-		type='password'
-		onChange={e=> setPw(e.target.value)}
-		placeholder="비밀번호를 입력하세요" style={{width : "92%", height : "20px", marginBottom : "5px", border : "0.5px solid gray", borderRadius : "0px"}}/>
-		<Button dark={user.dark} color={state.subcolor2}  onClick={() => {
-			
-			postLogin();
-			
-		}}>
-		로그인
-		</Button>
 		<DarkToggle/>
-		
+		<MenuList dark={user.dark} color={state.color}>
+		이름 변경
+		</MenuList>
+		<MenuList onClick={() => {setUser((prevUser) => ({...prevUser, pwModal : true}))}} dark={user.dark} color={state.color}>
+		비밀번호 변경
+		</MenuList>
+		<Button onClick={() => {setUser((prevUser) => ({...prevUser, login : false}))}}>
+		로그아웃
+		</Button>
 		</div>
 		</Box>
 	)
