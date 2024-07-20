@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
-
+import * as bcrypt from 'bcrypt'
 import { UserEntity } from 'src/user/entities/user.entity';
 import { AuthDTO } from 'src/auth/dto/authDto';
 
@@ -40,7 +40,15 @@ export class UserService {
       },
     });
   }
+
+  async updatePW(macID: string, newPW: string) {
+    const user = await this.findByMacID(macID);
+    
+    const hashedPassword = await bcrypt.hash(newPW, 10);
+    user.password = hashedPassword;
+    
+    await this.userRepository.save(user);
+    return { message: 'Password updated successfully' };
 }
 
-
-
+}

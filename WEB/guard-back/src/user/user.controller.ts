@@ -1,9 +1,9 @@
 import {
   Body,
   ConflictException,
-  Controller, Post,
+  Controller, Post, Patch
 } from '@nestjs/common';
-
+import * as bcrypt from 'bcrypt';
 import { UserService } from './user.service';
 import { AuthDTO } from 'src/auth/dto/authDto';
 
@@ -29,5 +29,20 @@ export class UserController {
     const userEntity = await this.userService.create(authDTO);
 
     return '회원가입성공';
+  }
+  @Patch('/updatePW')
+  async updatePW(@Body() authDTO: AuthDTO.updatePW) {
+	const { macID, nowPW, newPW } = authDTO;
+console.log(macID);
+console.log(newPW);
+        const user = await this.userService.findByMacID(macID);	
+	if(!user)
+	throw new ConflictException('empty user');
+
+	const isSamePassword = await bcrypt.compareSync(nowPW, user.password);
+	if(!isSamePassword)
+	throw new ConflictException('password error');
+
+return await this.userService.updatePW(macID, newPW);
   }
 }

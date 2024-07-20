@@ -107,7 +107,7 @@ const reversePrev = [...prev];
 
 	return (
 		<Container dark={user.dark}>
-		<PasswordChangeModal isOpen={user.pwModal} onClose={()=> setUser((prev) => ({...prev, pwModal : false}))}/>
+		<PasswordChangeModal MACid={user.MACid} isOpen={user.pwModal} onClose={()=> setUser((prev) => ({...prev, pwModal : false}))}/>
 		<Items onClick={imageFlag} dark={user.dark} color={state.color}>
 		<img src={`data:image/png;base64,${base64Image}`} style={{width : '50px', height : '50px'}}/>
 		</Items>

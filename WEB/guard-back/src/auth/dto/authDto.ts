@@ -20,4 +20,15 @@ export namespace AuthDTO {
       @Length(4, 20)
       password: string;
     }
+
+    export class updatePW {
+	@IsString()
+	macID: string;
+
+	@IsString()
+	nowPW : string;
+
+	@IsString()
+	newPW : string;
+    }
   }

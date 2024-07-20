@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import './PasswordChangeModal.css'; // 스타일링을 위한 CSS 파일
-
-const PasswordChangeModal = ({ isOpen, onClose }) => {
+import axios from 'axios';
+const PasswordChangeModal = ({ MACid, isOpen, onClose }) => {
     const [currentPassword, setCurrentPassword] = useState('');
     const [newPassword, setNewPassword] = useState('');
     const [confirmPassword, setConfirmPassword] = useState('');
@@ -10,18 +10,40 @@ const PasswordChangeModal = ({ isOpen, onClose }) => {
     const handleNewPasswordChange = (e) => setNewPassword(e.target.value);
     const handleConfirmPasswordChange = (e) => setConfirmPassword(e.target.value);
 
+	const submitPW = async () => {
+    try {
+	    alert(process.env.REACT_APP_SERVER_MAIN+'/user/updatePW');
+      const response = await axios.patch('/user/updatePW', {
+        macID: MACid,
+        nowPW: currentPassword,
+        newPW: newPassword,
+      });
+
+      if (response.status === 200) {
+        alert('Password changed successfully!');
+        onClose();
+      } else {
+        alert('Password change failed.');
+      }
+    } catch (error) {
+      console.error(error);
+      alert('An error occurred while changing the password.');
+    }
+  };
+
     const handleSubmit = (e) => {
         e.preventDefault();
         if (newPassword !== confirmPassword) {
             alert('New password and confirmation do not match.');
             return;
         }
-        // 여기에 비밀번호 변경 로직을 추가하세요 (예: API 호출)
+        submitPW();// 여기에 비밀번호 변경 로직을 추가하세요 (예: API 호출)
         alert('Password changed successfully!');
         onClose();
     };
 
     if (!isOpen) return null;
+
 
     return (
         <div className="modal-overlay">
