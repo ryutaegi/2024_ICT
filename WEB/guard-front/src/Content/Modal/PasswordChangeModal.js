@@ -21,7 +21,6 @@ const PasswordChangeModal = ({ MACid, isOpen, onClose }) => {
 
       if (response.status === 200) {
         alert('Password changed successfully!');
-        onClose();
       } else {
         alert('Password change failed.');
       }
@@ -38,7 +37,6 @@ const PasswordChangeModal = ({ MACid, isOpen, onClose }) => {
             return;
         }
         submitPW();// 여기에 비밀번호 변경 로직을 추가하세요 (예: API 호출)
-        alert('Password changed successfully!');
         onClose();
     };
 

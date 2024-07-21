@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import './UsernameChangeModal.css'; // 스타일링을 위한 CSS 파일
+import './PasswordChangeModal.css'; // 스타일링을 위한 CSS 파일
 import axios from 'axios';
 const UsernameChangeModal = ({username, MACid, isOpen, onClose }) => {
     const [newUsername, setNewUsername] = useState(username);
@@ -16,7 +16,6 @@ const UsernameChangeModal = ({username, MACid, isOpen, onClose }) => {
 
       if (response.status === 200) {
         alert('Username changed successfully!');
-        onClose();
       } else {
         alert('Username change failed.');
       }
