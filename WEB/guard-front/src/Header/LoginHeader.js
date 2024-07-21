@@ -97,7 +97,7 @@ const LoginHeader = () => {
 		</Logo>
 		<div>
 		<DarkToggle/>
-		<MenuList dark={user.dark} color={state.color}>
+		<MenuList onClick={()=>{setUser((prev)=> ({...prev, UsernameModal : true}))}}  dark={user.dark} color={state.color}>
 		이름 변경
 		</MenuList>
 		<MenuList onClick={() => {setUser((prevUser) => ({...prevUser, pwModal : true}))}} dark={user.dark} color={state.color}>

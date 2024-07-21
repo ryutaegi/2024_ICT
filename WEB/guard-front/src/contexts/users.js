@@ -9,7 +9,8 @@ const UserProvider = ({children}) => {
 		password : "",
 		dark : false,
 		isMobile : false,
-		pwModal : false
+		pwModal : false,
+		UsernameModal : false
 	}
 	);
 	return (

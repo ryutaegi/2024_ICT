@@ -1,44 +1,34 @@
 import React, { useState } from 'react';
 import './UsernameChangeModal.css'; // 스타일링을 위한 CSS 파일
 import axios from 'axios';
-const UsernameChangeModal = ({ MACid, isOpen, onClose }) => {
-    const [currentPassword, setCurrentPassword] = useState('');
-    const [newPassword, setNewPassword] = useState('');
-    const [confirmPassword, setConfirmPassword] = useState('');
+const UsernameChangeModal = ({username, MACid, isOpen, onClose }) => {
+    const [newUsername, setNewUsername] = useState(username);
 
-    const handleCurrentPasswordChange = (e) => setCurrentPassword(e.target.value);
-    const handleNewPasswordChange = (e) => setNewPassword(e.target.value);
-    const handleConfirmPasswordChange = (e) => setConfirmPassword(e.target.value);
+    const handleNewUsername = (e) => setNewUsername(e.target.value);
 
-	const submitPW = async () => {
+	const submitUsername = async () => {
     try {
 	    alert(process.env.REACT_APP_SERVER_MAIN+'/user/updatePW');
-      const response = await axios.patch('/user/updatePW', {
+      const response = await axios.patch('/user/updateUsername', {
         macID: MACid,
-        nowPW: currentPassword,
-        newPW: newPassword,
+        newUsername: newUsername,
       });
 
       if (response.status === 200) {
-        alert('Password changed successfully!');
+        alert('Username changed successfully!');
         onClose();
       } else {
-        alert('Password change failed.');
+        alert('Username change failed.');
       }
     } catch (error) {
       console.error(error);
-      alert('An error occurred while changing the password.');
+      alert('An error occurred while changing the Username.');
     }
   };
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        if (newPassword !== confirmPassword) {
-            alert('New password and confirmation do not match.');
-            return;
-        }
-        submitPW();// 여기에 비밀번호 변경 로직을 추가하세요 (예: API 호출)
-        alert('Password changed successfully!');
+        submitUsername();// 여기에 비밀번호 변경 로직을 추가하세요 (예: API 호출)
         onClose();
     };
 
@@ -48,36 +38,18 @@ const UsernameChangeModal = ({ MACid, isOpen, onClose }) => {
     return (
         <div className="modal-overlay">
             <div className="modal-content">
-                <h2>Change Password</h2>
+                <h2>Change Username</h2>
                 <form onSubmit={handleSubmit}>
                     <div className="form-group">
-                        <label>Current Username</label>
+                        <label>New Username</label>
                         <input
-                            value={currentPassword}
-                            onChange={handleCurrentPasswordChange}
-                            required
-                        />
-                    </div>
-                    <div className="form-group">
-                        <label>New Password</label>
-                        <input
-                            type="password"
-                            value={newPassword}
-                            onChange={handleNewPasswordChange}
-                            required
-                        />
-                    </div>
-                    <div className="form-group">
-                        <label>Confirm New Password</label>
-                        <input
-                            type="password"
-                            value={confirmPassword}
-                            onChange={handleConfirmPasswordChange}
+                            value={newUsername}
+                            onChange={handleNewUsername}
                             required
                         />
                     </div>
                     <div className="form-actions">
-                        <button type="submit">Change Password</button>
+                        <button type="submit">Change Username</button>
                         <button type="button" onClick={onClose}>Cancel</button>
                     </div>
                 </form>

@@ -4,7 +4,8 @@ import { useEffect, useState, useContext } from 'react';
 import UserContext from '../contexts/users';
 import ColorContext from '../contexts/color';
 import io from 'socket.io-client';
-import PasswordChangeModal from './Modal/PasswordChangeModal'
+import PasswordChangeModal from './Modal/PasswordChangeModal';
+import UsernameChangeModal from './Modal/UsernameChangeModal';
 
 const Items = styled.div`
 width : 40%;
@@ -107,6 +108,7 @@ const reversePrev = [...prev];
 
 	return (
 		<Container dark={user.dark}>
+		<UsernameChangeModal MACid={user.MACid} isOpen={user.UsernameModal} onClose={() => setUser((prev) => ({...prev, UsernameModal : false}))}/>
 		<PasswordChangeModal MACid={user.MACid} isOpen={user.pwModal} onClose={()=> setUser((prev) => ({...prev, pwModal : false}))}/>
 		<Items onClick={imageFlag} dark={user.dark} color={state.color}>
 		<img src={`data:image/png;base64,${base64Image}`} style={{width : '50px', height : '50px'}}/>
