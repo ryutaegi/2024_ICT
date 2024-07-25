@@ -30,6 +30,7 @@ export class UserController {
 
     return '회원가입성공';
   }
+
   @Patch('/updatePW')
   async updatePW(@Body() authDTO: AuthDTO.updatePW) {
 	const { macID, nowPW, newPW } = authDTO;
@@ -45,4 +46,20 @@ console.log(newPW);
 
 return await this.userService.updatePW(macID, newPW);
   }
+
+
+  @Patch('/updateUsername')
+  async updateUsername(@Body() authDTO: AuthDTO.updateUsername) {
+	const { macID, newUsername } = authDTO;
+console.log(macID);
+console.log(newUsername);
+        const user = await this.userService.findByMacID(macID);	
+	if(!user)
+	throw new ConflictException('empty user');
+
+
+return await this.userService.updateUsername(macID, newUsername);
+  }
+
+
 }

@@ -6,6 +6,7 @@ const UserProvider = ({children}) => {
 	const [user, setUser] = useState({
 		login : false,
 		MACid : "",
+		username : "",
 		password : "",
 		dark : false,
 		isMobile : false,

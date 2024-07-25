@@ -51,4 +51,15 @@ export class UserService {
     return { message: 'Password updated successfully' };
 }
 
+async updateUsername(macID : string, newUsername: string) {
+const user = await this.findByMacID(macID);
+
+user.username = newUsername;
+await this.userRepository.save(user);
+
+return {message : "Username update Successfully"};
+
+};
+
+
 }

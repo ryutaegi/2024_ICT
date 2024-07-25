@@ -8,7 +8,7 @@ const UsernameChangeModal = ({username, MACid, isOpen, onClose }) => {
 
 	const submitUsername = async () => {
     try {
-	    alert(process.env.REACT_APP_SERVER_MAIN+'/user/updatePW');
+	    alert(process.env.REACT_APP_SERVER_MAIN+'/user/updateUsername');
       const response = await axios.patch('/user/updateUsername', {
         macID: MACid,
         newUsername: newUsername,

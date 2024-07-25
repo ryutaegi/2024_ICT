@@ -31,4 +31,12 @@ export namespace AuthDTO {
 	@IsString()
 	newPW : string;
     }
+
+    export class updateUsername {
+	    @IsString()
+	    macID : string;
+
+	    @IsString()
+	    newUsername : string;
+    }
   }

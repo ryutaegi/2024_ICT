@@ -93,7 +93,7 @@ const LoginHeader = () => {
 	return (
 		<Box dark={user.dark} color={user.dark == true ? 'black' : state.color}>
 		<Logo dark={user.dark} color={state.subcolor}>
-		hello, world!
+		hello, {user.username}
 		</Logo>
 		<div>
 		<DarkToggle/>
