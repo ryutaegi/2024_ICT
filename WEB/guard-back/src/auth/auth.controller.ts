@@ -31,7 +31,7 @@ console.log(macID+password);
     if (!isSamePassword) {
       throw new UnauthorizedException('이메일 또는 비밀번호를 확인해 주세요.');
     }
-
-    return "로그인 완료"
+console.log(user);
+    return user.username;
   }
 }

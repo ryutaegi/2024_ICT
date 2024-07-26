@@ -101,9 +101,8 @@ const postLogin = async () => {
                     "password": pw
                 }
             });
-            console.log("signin:", response);
-		setUser((prevUser) => ({ ...prevUser, login : true, MACid : id}));
-		alert("websocket connected");
+            //alert(JSON.stringify(response));
+		setUser((prevUser) => ({ ...prevUser, login : true, MACid : id, username : response.data}));
             
         } catch (error) {
             alert("로그인 실패 "+error);
