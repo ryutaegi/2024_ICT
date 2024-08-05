@@ -85,7 +85,6 @@ const LogoutHeader = () => {
 	const {state} = useContext(ColorContext);
 	const [user, setUser] = useContext(UserContext);
 
-
 	
 const postLogin = async () => {
 

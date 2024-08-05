@@ -9,7 +9,7 @@ const UserProvider = ({children}) => {
 		username : "",
 		password : "",
 		dark : false,
-		isMobile : false,
+		isMobile : window.innerWidth <= 768 ? true : false,
 		pwModal : false,
 		UsernameModal : false
 	}
