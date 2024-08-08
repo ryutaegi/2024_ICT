@@ -22,26 +22,36 @@ const media = Object.keys(sizes).reduce((acc,label) => {
 const Box = styled.div`
 background: ${props => props.color || 'blue'};
 padding: 1rem;
-width: 1024px;
+width: 100vw;
 display : flex;
 height : 100vh;
 flex-direction : column;
 justify-content : center;
-${media.desktop`width:200px;`}
-${media.tablet`width:200px;}`};
+${media.desktop`width:100%;`};
+${media.tablet`width:100%;}`};
 `
+
+const Card = styled.div`
+background: rgb(241, 241, 241);
+width : 200px;
+height : 200px;
+padding : 3rem;
+margin : 0 auto;
+border-radius : 20px;
+`;
 
 const Logo = styled.div`
 text-align : center;
 width : 100%;
 height : 40px;
-padding-top : 50%;
-color : ${props => props.dark == true ? 'white' :  props.color};
-font-size : 20px;
+color : ${props => props.dark == true ? 'white' : 'black'};
+font-size : 25px;
+font-weight : 600;
+margin-bottom : 5px;
 `;
 
 const Button = styled.button`
-background:${props => props.dark ? 'dark' : props.color};
+background:${props => props.dark ? 'rgb(0,0,0)' : props.color};
 color: ${props => props.dark ? 'white' : 'white'};
 border : 0;
 margin-top : 5px;
@@ -51,7 +61,7 @@ font-size : 15px;
 width : 100%;
 height : 30px;
 &:hover {
-background : rgba(255,255,255,0.9);
+background : rgba(150,150,150,0.9);
 }
 
 ${props => 
@@ -110,20 +120,22 @@ const postLogin = async () => {
 	}};
 	return (
 		<Box color={user.dark == true ? 'black' : 'white'}>
-		<Logo color={state.color}>
-		Welcome to ICT
-		</Logo>
+		<Card>
 		<div>
+		<Logo color={state.color}>
+		Login
+		</Logo>
+		
 	
 		<input
 		value={id}
 		onChange={e => setId(e.target.value)}
-		placeholder="MAC주소를 입력하세요" style={{width : "92%", height : '20px', marginBottom : "5px", border : "0.5px solid gray", borderRadius : "0px"}}/>
+		placeholder="MAC주소를 입력하세요" style={{width : "95%", height : '20px', marginBottom : "5px", border : "0.5px solid gray", borderRadius : "0px"}}/>
 		<input 
 		value={pw}
 		type='password'
 		onChange={e=> setPw(e.target.value)}
-		placeholder="비밀번호를 입력하세요" style={{width : "92%", height : "20px", marginBottom : "5px", border : "0.5px solid gray", borderRadius : "0px"}}/>
+		placeholder="비밀번호를 입력하세요" style={{width : "95%", height : "20px", marginBottom : "5px", border : "0.5px solid gray", borderRadius : "0px"}}/>
 		<Button dark={user.dark} color={state.subcolor2}  onClick={() => {
 			
 			postLogin();
@@ -131,9 +143,14 @@ const postLogin = async () => {
 		}}>
 		로그인
 		</Button>
-		<DarkToggle/>
-		
+		<div style={{marginTop : '20px', display : 'flex', justifyContent : 'center', alignItems: 'center', height : '100px'}}>
+		<div style={{marginRight : '10px', color : user.dark==false ? "rgb(150,150,150)" : "rgb(0,0,0)"}}>
+		{user.dark == true ? "dark mode" : "white mode"}
 		</div>
+		<DarkToggle/>
+		</div>
+		</div>
+		</Card>
 		</Box>
 	)
 }

@@ -32,7 +32,8 @@ width : 100%;
 const LogoutContent = () => {
 	const {state} = useContext(ColorContext);
 	const [user, setUser] = useContext(UserContext);
-	return (
+
+		return (
 		<Container color={state.subcolor} dark={user.dark}>
 		<ImageSlider/>
 		</Container>

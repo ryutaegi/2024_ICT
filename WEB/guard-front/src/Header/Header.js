@@ -11,7 +11,7 @@ import LogoutHeader from './LogoutHeader';
 const Header = () => {
 	const [user, setUser] = useContext(UserContext);
 	return (
-	<div style={{display : 'flex', width : '200px'}}>
+	<div style={{display : 'flex', width : user.login == false ? '100vw' : '200px'}}>
 		{user.login == false ? <LogoutHeader/> : <LoginHeader/>}
 	</div>
 

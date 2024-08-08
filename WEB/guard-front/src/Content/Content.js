@@ -8,6 +8,8 @@ import LogoutContent from './LogoutContent';
 
 const Content = () => {
 	const [user, setUser] = useContext(UserContext);
+	if(user.login == false)
+	return null;
 	return (
 		<div style={{width : "100%", display : "flex"}}>
 		{user.login == false ? <LogoutContent/> : <LoginContent/>}

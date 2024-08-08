@@ -5,7 +5,7 @@ const Layout = () => {
 	 return (
 		 <div style={{display :"flex", flexDirectoin : "row", justifyContent : "space-between"}}>
 		<Header/>
-		 <Outlet />
+		<Outlet /> 
 		 </div>
 	 );
 };
