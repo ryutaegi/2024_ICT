@@ -11,7 +11,7 @@ const Content = () => {
 	if(user.login == false)
 	return null;
 	return (
-		<div style={{width : "100%", display : "flex"}}>
+		<div style={{width : "100vw", display : "flex"}}>
 		{user.login == false ? <LogoutContent/> : <LoginContent/>}
 	</div>
 	)

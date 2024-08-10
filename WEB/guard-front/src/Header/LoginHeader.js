@@ -22,20 +22,20 @@ const media = Object.keys(sizes).reduce((acc,label) => {
 const Box = styled.div`
 background: ${props => props.color || 'blue'};
 padding: 1rem;
-width: 1024px;
+width: 100%;
 display : flex;
-height : 100vh;
-flex-direction : column;
+flex-direction : row;
 justify-content : space-between;
-${media.desktop`width:200px;`}
-${media.tablet`width:200px;}`};
-`
+align-items : center;
+height : 10vh;
+${media.desktop`height:5vh;`}
+${media.tablet`height:5vh;`}
+`;
 
 const Logo = styled.div`
 text-align : center;
-width : 100%;
-height : 40px;
-padding-top : 50%;
+width : 40vw;
+padding-top : 0%;
 color : ${props => props.dark == true ? 'white' : props.color};
 font-size : 20px;
 `;
@@ -46,8 +46,8 @@ color: black;
 border-radius : 4px;
 box-sizing : 1rem;
 font-weight : 600;
-width : 100%;
-margin-top : 10px;
+width : 20vw;
+height : 5vh;
 &:hover {
 background : rgba(255,255,255,0.9);
 }
@@ -78,8 +78,7 @@ font-size : 5rem;
 `;
 
 const MenuList = styled.button`
-width : 100%;
-margin-bottom : 5px;
+width : 25vw;
 border : 0;
 color : white;
 background-color : ${props => props.dark == true ? 'black'  :  props.color};
@@ -93,16 +92,17 @@ const LoginHeader = () => {
 	return (
 		<Box dark={user.dark} color={user.dark == true ? 'black' : state.color}>
 		<Logo dark={user.dark} color={state.subcolor}>
-		hello, {user.username}
+		{user.username}
 		</Logo>
-		<div>
-		<DarkToggle/>
-		<MenuList onClick={()=>{setUser((prev)=> ({...prev, UsernameModal : true}))}}  dark={user.dark} color={state.color}>
+		<div style={{display : "flex",flexDirection : "row", alignItems : "center"}}>
+		<div style={{display : "flex", flexDirection : "column"}}>
+		<MenuList style={{marginBottom : "5px"}} onClick={()=>{setUser((prev)=> ({...prev, UsernameModal : true}))}}  dark={user.dark} color={state.color}>
 		이름 변경
 		</MenuList>
 		<MenuList onClick={() => {setUser((prevUser) => ({...prevUser, pwModal : true}))}} dark={user.dark} color={state.color}>
 		비밀번호 변경
 		</MenuList>
+		</div>
 		<Button onClick={() => {setUser((prevUser) => ({...prevUser, login : false}))}}>
 		로그아웃
 		</Button>

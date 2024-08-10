@@ -3,7 +3,7 @@ import Header from './Header/Header.js';
 
 const Layout = () => {
 	 return (
-		 <div style={{display :"flex", flexDirectoin : "row", justifyContent : "space-between"}}>
+		 <div style={{display :"flex", flexDirection : "column"}}>
 		<Header/>
 		<Outlet /> 
 		 </div>

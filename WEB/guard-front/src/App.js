@@ -15,7 +15,6 @@ function App() {
     <Routes>
 	  <Route element={<Layout/>}>
 	  <Route path="/" element={<Content/>} />
-	  <Route path="/login" element={<Login/>}/>
 	</Route>
     </Routes>
 	  </ColorProvider>
