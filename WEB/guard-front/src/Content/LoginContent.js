@@ -62,7 +62,7 @@ const LoginContent = () => {
 	const { state } = useContext(ColorContext);
 	const [user, setUser] = useContext(UserContext);
 const [controlData, setControlData] = useState([0,0,0]);
-
+const [sensorData, setSensorData] = useState([]);
   
   const [roomStatus, setRoomStatus] = useState('');
   const [base64Image, setBase64Image] = useState('');
@@ -115,6 +115,7 @@ const reversePrev = [...prev];
 	}
 	if(type == 3){
 	alert('type3 : ',datas.datas);
+	setSensorData(prev=> [...prev, datas.datas])
 	}
 	});
 	  
@@ -142,7 +143,10 @@ const reversePrev = [...prev];
 		지도
 		</Items>
 		<Items dark={user.dark} color={state.color}>
-		로그
+		log
+		{sensorData.map((str, idx) => (
+		{str}
+		))}
 	<div>
 	{roomStatus}
       </div>
