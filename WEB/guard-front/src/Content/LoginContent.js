@@ -1,4 +1,4 @@
-import styled from 'styled-components';
+import styled, {css} from 'styled-components';
 import { Link } from 'react-router-dom';
 import { useEffect, useState, useContext } from 'react';
 import UserContext from '../contexts/users';
@@ -6,15 +6,40 @@ import ColorContext from '../contexts/color';
 import io from 'socket.io-client';
 import PasswordChangeModal from './Modal/PasswordChangeModal';
 import UsernameChangeModal from './Modal/UsernameChangeModal';
+import DarkToggle from '../component/DarkToggle.js';
+
+
+const sizes = {
+	desktop :1024,
+	tablet : 768
+};
+
+const media = Object.keys(sizes).reduce((acc,label) => {
+	acc[label] = (...args) => css`
+	@media ( max-width: ${sizes[label] / 16}em) {
+	${css(...args)};
+	}
+	`;
+	return acc;
+}, {});
+
+
 
 const Items = styled.div`
 width : 40%;
+height : 40%;
+${media.desktop`width:400px;`}
+${media.tablet`width:80vw;`}
+${media.desktop`height:400px;`}
+${media.tablet`height:80vw;`}
 flex-grow : 0;
 flex-shrink : 0;
 color : white;
 padding-bottom : 20%;
+margin-bottom : 30px;
 text-align :center;
-background-color : ${props => props.dark == true ? '#555555' :  props.color};
+border-radius : 30px;
+background-color : ${props => props.dark == true ? '#555555' :  'rgb(241, 241, 241)'};
 justify-content : center;
 aligh-items : center;
 `;
@@ -72,7 +97,7 @@ const reversePrev = [...prev];
 	  joinOrCreateRoom();
     socket.on('roomJoined', (room) => {
       setRoomStatus(`Joined room ${room} successfully`);
-    alert('socketon');
+    
     });
 	sendControlData();
 	socket.on('message',(datas) => {
@@ -125,6 +150,7 @@ const reversePrev = [...prev];
 		<Items dark={user.dark} color={state.color}>
 		<button onClick={sendControlData}>data send</button>
 		</Items>
+		<DarkToggle/>
 		</Container>
 	)
 }

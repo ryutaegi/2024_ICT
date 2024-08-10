@@ -33,10 +33,10 @@ ${media.tablet`height:5vh;`}
 `;
 
 const Logo = styled.div`
-text-align : center;
+text-align : left;
 width : 40vw;
 padding-top : 0%;
-color : ${props => props.dark == true ? 'white' : props.color};
+color : ${props => props.dark == true ? 'white' : 'white'};
 font-size : 20px;
 `;
 
@@ -45,7 +45,8 @@ background:white;
 color: black;
 border-radius : 4px;
 box-sizing : 1rem;
-font-weight : 600;
+font-size : 13px;
+font-weight : 800;
 width : 20vw;
 height : 5vh;
 &:hover {
