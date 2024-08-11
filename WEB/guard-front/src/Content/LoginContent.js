@@ -35,6 +35,7 @@ ${media.tablet`height:80vw;`}
 flex-grow : 0;
 flex-shrink : 0;
 color : white;
+overflow : hidden;
 padding-bottom : 20%;
 margin-bottom : 30px;
 text-align :center;
@@ -69,7 +70,7 @@ const [sensorData, setSensorData] = useState([]);
   const [base64Image, setBase64Image] = useState('');
   const joinOrCreateRoom = () => {
     socket.emit('joinOrCreateRoom', [user.MACid, 1]);
-	  alert(user.MACid)
+	  //alert(user.MACid)
   };
 
 
@@ -98,7 +99,7 @@ const reversePrev = [...prev];
 	  joinOrCreateRoom();
     socket.on('roomJoined', (room) => {
       setRoomStatus(`Joined room ${room} successfully`);
-  alert("socket")  
+  //alert("socket")  
     });
 	sendControlData();
 	socket.on('message',(datas) => {
@@ -108,15 +109,15 @@ const reversePrev = [...prev];
 		alert("send controlData");
 	}
 	if(type == 2){
-	alert('type2 : ', datas.datas);
+	//alert('type2 : ', datas.datas);
 		setBase64Image(datas.datas[0]);
 		//setBase64Image("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAUAAAAFCAYAAACNbyblAAAAHElEQVQI12P4//8/w38GIAXDIBKE0DHxgljNBAAO9TXL0Y4OHwAAAABJRU5ErkJggg==");
-	alert(datas.datas[0]);
-	alert(base64Image);
+	//alert(datas.datas[0]);
+	//alert(base64Image);
 	}
 	if(type == 3){
-	alert('type3 : ');
-		alert(JSON.stringify(datas.datas));
+	//alert('type3 : ');
+		//alert(JSON.stringify(datas.datas));
 	setSensorData(prev=> [...prev, JSON.stringify(datas.datas)])
 	}
 	});
@@ -139,8 +140,8 @@ const reversePrev = [...prev];
 		<UsernameChangeModal MACid={user.MACid} isOpen={user.UsernameModal} onClose={() => setUser((prev) => ({...prev, UsernameModal : false}))}/>
 		<PasswordChangeModal MACid={user.MACid} isOpen={user.pwModal} onClose={()=> setUser((prev) => ({...prev, pwModal : false}))}/>
 		<Items onClick={imageFlag} dark={user.dark} color={state.color}>
-		<img src={`data:image/png;base64,${base64Image}`} style={{width : '50px', height : '50px'}}/>
-		</Items>
+		{base64Image ?	<img src={`data:image/png;base64,${base64Image}`} style={{width : '100%', height : '100%'}}/> : 'loading' }
+			</Items>
 		<Items dark={user.dark} color={state.color}>
 		지도
 		</Items>

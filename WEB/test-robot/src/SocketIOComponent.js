@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import io from 'socket.io-client';
-
+import {base64Image} from './imagebase64.js'
 const SOCKET_SERVER_URL = process.env.REACT_APP_SERVER_WEBSOCKET;
 
 const SocketIOComponent = () => {
@@ -12,7 +12,7 @@ const SocketIOComponent = () => {
 
   useEffect(() => {
     // Socket.IO 클라이언트 초기화 및 서버 연결
-    alert(SOCKET_SERVER_URL)
+    //alert(SOCKET_SERVER_URL)
 	const socketIo = io(SOCKET_SERVER_URL);
     setSocket(socketIo);
 
@@ -65,13 +65,14 @@ const encodeImageFileAsURL = (url) => {
 //alert(imageUrl);
   //  encodeImageFileAsURL(imageUrl).then((base64Data) => {
       // 웹소켓을 통해 base64 데이터 전송
-      socket.emit('message', { room: 'AA:11:BB:22:CC:33', datas: { type: 2, datas: ['iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mP8/wcAAgIB/7kUJtAAAAAASUVORK5CYII=', 'image/image.png'] } });
+      socket.emit('message', { room: 'AA:11:BB:22:CC:33', datas: { type: 2, datas: [base64Image, 'image/image.png'] } });
    // }).catch(error => {
     //  console.error('Error encoding file:', error);
     //});
 
   };	
 
+	 // <img style={{height : "100px", width : "100px"}} src={`data:image/png;base64,${base64Image}`} alt="Complex Image" />
   return (
     <div>
       <h2>SENSOR DATA TESTER</h2>
@@ -92,7 +93,9 @@ const encodeImageFileAsURL = (url) => {
           ))}
         </ul>
       </div>
-    </div>
+
+  
+	  </div>
   );
 };
 
