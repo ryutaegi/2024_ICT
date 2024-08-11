@@ -57,6 +57,7 @@ background-color : ${(props) => (props.dark? 'gray' : 'white')};
 
 const socket = io(process.env.REACT_APP_SERVER_WEBSOCKET);
 
+//const socket = io('http://localhost:5024');
 
 const LoginContent = () => {
 	const { state } = useContext(ColorContext);
@@ -93,11 +94,11 @@ const reversePrev = [...prev];
 };
 
   useEffect(() => {
-	  alert('socket');
+	 
 	  joinOrCreateRoom();
     socket.on('roomJoined', (room) => {
       setRoomStatus(`Joined room ${room} successfully`);
-    
+  alert("socket")  
     });
 	sendControlData();
 	socket.on('message',(datas) => {
@@ -114,8 +115,9 @@ const reversePrev = [...prev];
 	alert(base64Image);
 	}
 	if(type == 3){
-	alert('type3 : ',datas.datas);
-	setSensorData(prev=> [...prev, datas.datas])
+	alert('type3 : ');
+		alert(JSON.stringify(datas.datas));
+	setSensorData(prev=> [...prev, JSON.stringify(datas.datas)])
 	}
 	});
 	  
@@ -144,8 +146,10 @@ const reversePrev = [...prev];
 		</Items>
 		<Items dark={user.dark} color={state.color}>
 		log
-		{sensorData.map((str, idx) => (
-		{str}
+		{sensorData.map((con, idx) => (
+			<div key={idx}>
+			{JSON.stringify(con)}
+			</div>
 		))}
 	<div>
 	{roomStatus}

@@ -12,8 +12,10 @@ const SocketIOComponent = () => {
 
   useEffect(() => {
     // Socket.IO 클라이언트 초기화 및 서버 연결
-    const socketIo = io(SOCKET_SERVER_URL);
+    alert(SOCKET_SERVER_URL)
+	const socketIo = io(SOCKET_SERVER_URL);
     setSocket(socketIo);
+
 
    
     socketIo.emit('joinOrCreateRoom', ['AA:11:BB:22:CC:33', 0]);
