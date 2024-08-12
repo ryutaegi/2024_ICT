@@ -7,7 +7,7 @@ import io from 'socket.io-client';
 import PasswordChangeModal from './Modal/PasswordChangeModal';
 import UsernameChangeModal from './Modal/UsernameChangeModal';
 import DarkToggle from '../component/DarkToggle.js';
-
+import Mapbox3DObject from '../mapbox/Mapbox3DObject.js';
 
 const sizes = {
 	desktop :1024,
@@ -144,6 +144,7 @@ const reversePrev = [...prev];
 			</Items>
 		<Items dark={user.dark} color={state.color}>
 		지도
+		<Mapbox3DObject latitude={37} longitude={127}/>
 		</Items>
 		<Items dark={user.dark} color={state.color}>
 		log
