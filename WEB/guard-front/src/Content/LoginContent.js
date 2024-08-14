@@ -16,7 +16,7 @@ const sizes = {
 
 const media = Object.keys(sizes).reduce((acc,label) => {
 	acc[label] = (...args) => css`
-	@media ( max-width: ${sizes[label] / 16}em) {
+	@media ( min-width: ${sizes[label] / 16}em) {
 	${css(...args)};
 	}
 	`;
@@ -28,9 +28,9 @@ const media = Object.keys(sizes).reduce((acc,label) => {
 const Items = styled.div`
 width : 40%;
 height : 40%;
-${media.desktop`width:400px;`}
+${media.desktop`width:100px;`}
 ${media.tablet`width:80vw;`}
-${media.desktop`height:400px;`}
+${media.desktop`height:200px;`}
 ${media.tablet`height:80vw;`}
 flex-grow : 0;
 flex-shrink : 0;

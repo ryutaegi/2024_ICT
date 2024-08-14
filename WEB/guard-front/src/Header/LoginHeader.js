@@ -12,7 +12,7 @@ const sizes = {
 
 const media = Object.keys(sizes).reduce((acc,label) => {
 	acc[label] = (...args) => css`
-	@media ( max-width: ${sizes[label] / 16}em) {
+	@media ( min-width: ${sizes[label] / 16}em) {
 	${css(...args)};
 	}
 	`;
@@ -28,8 +28,7 @@ flex-direction : row;
 justify-content : space-between;
 align-items : center;
 height : 10vh;
-${media.desktop`height:5vh;`}
-${media.tablet`height:5vh;`}
+${media.desktop`height:30px;`}
 `;
 
 const Logo = styled.div`
@@ -48,6 +47,7 @@ box-sizing : 1rem;
 font-size : 13px;
 font-weight : 800;
 width : 20vw;
+${media.desktop`width : 150px`}
 height : 5vh;
 &:hover {
 background : rgba(255,255,255,0.9);
@@ -80,6 +80,7 @@ font-size : 5rem;
 
 const MenuList = styled.button`
 width : 25vw;
+${media.desktop`width : 150px`}
 border : 0;
 color : white;
 background-color : ${props => props.dark == true ? 'black'  :  props.color};
