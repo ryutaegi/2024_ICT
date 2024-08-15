@@ -26,12 +26,8 @@ const media = Object.keys(sizes).reduce((acc,label) => {
 
 
 const Items = styled.div`
-width : 40%;
-height : 40%;
-${media.desktop`width:100px;`}
-${media.tablet`width:80vw;`}
-${media.desktop`height:200px;`}
-${media.tablet`height:80vw;`}
+width : ${props => props.isMobile == 1 ? '80vw' : '200px'};
+height : ${props => props.isMobile == 1 ? '80vw' : '200px'};
 flex-grow : 0;
 flex-shrink : 0;
 color : white;
@@ -139,15 +135,15 @@ const reversePrev = [...prev];
 		<Container dark={user.dark}>
 		<UsernameChangeModal MACid={user.MACid} isOpen={user.UsernameModal} onClose={() => setUser((prev) => ({...prev, UsernameModal : false}))}/>
 		<PasswordChangeModal MACid={user.MACid} isOpen={user.pwModal} onClose={()=> setUser((prev) => ({...prev, pwModal : false}))}/>
-		<Items onClick={imageFlag} dark={user.dark} color={state.color}>
+		<Items isMobile={user.isMobile} onClick={imageFlag} dark={user.dark} color={state.color}>
 		{base64Image ?	<img src={`data:image/png;base64,${base64Image}`} style={{width : '100%', height : '100%'}}/> : 'loading' }
 			</Items>
-		<Items dark={user.dark} color={state.color}>
+		<Items dark={user.dark} color={state.color} isMobile={user.isMobile}>
 		지도
 		</Items>
 		
 		<Mapbox3DObject latitude={37} longitude={127} altitude={0}/>
-		<Items dark={user.dark} color={state.color}>
+		<Items dark={user.dark} color={state.color} isMobile={user.isMobile}>
 		log
 		{sensorData.map((con, idx) => (
 			<div key={idx}>
@@ -158,7 +154,7 @@ const reversePrev = [...prev];
 	{roomStatus}
       </div>
 		</Items>
-		<Items dark={user.dark} color={state.color}>
+		<Items dark={user.dark} color={state.color} isMobile={user.isMobile}>
 		<button onClick={sendControlData}>data send</button>
 		</Items>
 		<DarkToggle/>
