@@ -140,9 +140,10 @@ const reversePrev = [...prev];
 			</Items>
 		<Items dark={user.dark} color={state.color} isMobile={user.isMobile}>
 		지도
+
+		<Mapbox3DObject latitude={37.57796} longitude={126.97658} altitude={10}/>
 		</Items>
 		
-		<Mapbox3DObject latitude={37} longitude={127} altitude={0}/>
 		<Items dark={user.dark} color={state.color} isMobile={user.isMobile}>
 		log
 		{sensorData.map((con, idx) => (

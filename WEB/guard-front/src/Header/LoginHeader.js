@@ -27,7 +27,7 @@ display : flex;
 flex-direction : row;
 justify-content : space-between;
 align-items : center;
-height : 10vh;
+height : 30px;
 ${media.desktop`height:30px;`}
 `;
 

@@ -1,126 +1,113 @@
-
-
-import React, { useRef, useEffect } from 'react';
+import 'mapbox-gl/dist/mapbox-gl.css';
+import React, { useRef, useEffect, useState } from 'react';
+import { Canvas, useFrame, useThree } from '@react-three/fiber';
+import Map, { useMap } from 'react-map-gl';
 import mapboxgl from 'mapbox-gl';
-import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader';
 import * as THREE from 'three';
 
 mapboxgl.accessToken = 'pk.eyJ1IjoidGFleW91IiwiYSI6ImNsZHY2ajVkejA4MGszdm5vaWpvdG41Nm0ifQ.05ZauoKkriS9v4sp6ozTAA';
 
-const Mapbox3DObject = ({ latitude, longitude, altitude }) => {
-  const mapContainerRef = useRef(null);
+const Box = ({ position }) => {
+  const mesh = useRef();
+
+  useFrame(() => {
+    if (mesh.current) {
+      mesh.current.rotation.x += 0.01;
+      mesh.current.rotation.y += 0.01;
+      mesh.current.position.set(position[0], position[1], position[2]);
+    }
+  });
+
+  return (
+    <mesh ref={mesh}>
+      <boxGeometry args={[1, 1, 1]} />
+      <meshStandardMaterial color={'orange'} />
+    </mesh>
+  );
+};
+
+const ThreeOverlay = ({ map, position }) => {
+  const { scene, camera, gl } = useThree();
 
   useEffect(() => {
-    const map = new mapboxgl.Map({
-      container: mapContainerRef.current,
-      style: 'mapbox://styles/mapbox/streets-v11',
-      center: [longitude, latitude],
-      zoom: 19,
-      pitch: 60,
-      bearing: -60,
-    });
+    if (!map) return;
 
-    map.on('load', () => {
-      const modelOrigin = [longitude, latitude];
-      const modelAltitude = altitude;
-      const modelRotate = [Math.PI / 2, 0, 0];
+    const light = new THREE.DirectionalLight(0xffffff, 1);
+    light.position.set(0, 0, 10).normalize();
+    scene.add(light);
 
-      const modelAsMercatorCoordinate = mapboxgl.MercatorCoordinate.fromLngLat(
-        modelOrigin,
-        modelAltitude
-      );
+    const render = () => {
+      const { lng, lat } = map.getCenter();
+      const mercator = mapboxgl.MercatorCoordinate.fromLngLat({ lng, lat }, 0);
 
-      const modelTransform = {
-        translateX: modelAsMercatorCoordinate.x,
-        translateY: modelAsMercatorCoordinate.y,
-        translateZ: modelAsMercatorCoordinate.z,
-        rotateX: modelRotate[0],
-        rotateY: modelRotate[1],
-        rotateZ: modelRotate[2],
-        scale: modelAsMercatorCoordinate.meterInMercatorCoordinateUnits(),
+      camera.position.set(mercator.x, mercator.y, 2);
+      camera.lookAt(mercator.x, mercator.y, 0);
+
+      gl.autoClear = false;
+      gl.clearDepth();
+      gl.render(scene, camera);
+
+      map.triggerRepaint();
+    };
+
+    map.on('render', render);
+    render();
+
+    return () => {
+      map.off('render', render);
+    };
+  }, [map, scene, camera, gl]);
+
+  return null;
+};
+
+const Mapbox3DObject = () => {
+  const mapRef = useRef();
+  const [position, setPosition] = useState([0, 0, 0]);
+
+  useEffect(() => {
+    if (mapRef.current) {
+      const map = mapRef.current.getMap();
+
+      const updatePosition = () => {
+        const { lng, lat } = map.getCenter();
+        const mercator = mapboxgl.MercatorCoordinate.fromLngLat({ lng, lat }, 0);
+        setPosition([mercator.x, mercator.y, mercator.z || 0]);
       };
 
-      const customLayer = {
-        id: '3d-model',
-        type: 'custom',
-        renderingMode: '3d',
-        onAdd: function (map, gl) {
-          this.camera = new THREE.Camera();
-          this.scene = new THREE.Scene();
+      map.on('move', updatePosition);
+      updatePosition();
 
-          // create two three.js lights to illuminate the model
-          const directionalLight = new THREE.DirectionalLight(0xffffff);
-          directionalLight.position.set(0, -70, 100).normalize();
-          this.scene.add(directionalLight);
-
-          const directionalLight2 = new THREE.DirectionalLight(0xffffff);
-          directionalLight2.position.set(0, 70, 100).normalize();
-          this.scene.add(directionalLight2);
-
-          // use the three.js GLTF loader to add the 3D model to the three.js scene
-          const loader = new GLTFLoader();
-          loader.load(
-            'https://threejs.org/examples/models/gltf/DamagedHelmet/glTF/DamagedHelmet.gltf',
-            (gltf) => {
-              this.scene.add(gltf.scene);
-            }
-          );
-          this.map = map;
-
-          this.renderer = new THREE.WebGLRenderer({
-            canvas: map.getCanvas(),
-            context: gl,
-            antialias: true,
-          });
-
-          this.renderer.autoClear = false;
-        },
-        render: function (gl, matrix) {
-          const rotationX = new THREE.Matrix4().makeRotationAxis(
-            new THREE.Vector3(1, 0, 0),
-            modelTransform.rotateX
-          );
-          const rotationY = new THREE.Matrix4().makeRotationAxis(
-            new THREE.Vector3(0, 1, 0),
-            modelTransform.rotateY
-          );
-          const rotationZ = new THREE.Matrix4().makeRotationAxis(
-            new THREE.Vector3(0, 0, 1),
-            modelTransform.rotateZ
-          );
-
-          const m = new THREE.Matrix4().fromArray(matrix);
-          const l = new THREE.Matrix4()
-            .makeTranslation(
-              modelTransform.translateX,
-              modelTransform.translateY,
-              modelTransform.translateZ
-            )
-            .scale(
-              new THREE.Vector3(
-                modelTransform.scale,
-                -modelTransform.scale,
-                modelTransform.scale
-              )
-            )
-            .multiply(rotationX)
-            .multiply(rotationY)
-            .multiply(rotationZ);
-
-          this.camera.projectionMatrix = m.multiply(l);
-          this.renderer.state.reset();
-          this.renderer.render(this.scene, this.camera);
-          this.map.triggerRepaint();
-        },
+      return () => {
+        map.off('move', updatePosition);
       };
+    }
+  }, []);
 
-      map.addLayer(customLayer, 'waterway-label');
-    });
-
-    return () => map.remove();
-  }, [latitude, longitude, altitude]);
-
-  return <div ref={mapContainerRef} style={{ width: '100%', height: '100vh' }} />;
+  return (
+    <div style={{ height: '100vh', position: 'relative' }}>
+      <Map
+        ref={mapRef}
+        initialViewState={{
+          longitude: -74.006,
+          latitude: 40.7128,
+          zoom: 15,
+        }}
+        style={{ width: '100%', height: '100%' }}
+        mapStyle="mapbox://styles/mapbox/streets-v11"
+        mapboxAccessToken={mapboxgl.accessToken}
+      />
+      {mapRef.current && (
+        <Canvas
+          style={{ position: 'absolute', top: 0, left: 0, pointerEvents: 'none' }}
+          camera={{ position: [0, 0, 2], fov: 75 }}
+        >
+          <ThreeOverlay map={mapRef.current.getMap()} position={position} />
+          <Box position={position} />
+        </Canvas>
+      )}
+    </div>
+  );
 };
 
 export default Mapbox3DObject;
