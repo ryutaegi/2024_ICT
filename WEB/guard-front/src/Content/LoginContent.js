@@ -129,7 +129,11 @@ const reversePrev = [...prev];
     };
   }, []);
 
+const [coords, setCoords] = useState({ latitude: 37.57796, longitude: 126.97658 });
 
+  const updatePosition = () => {
+    setCoords({ latitude: 37.57800, longitude: 126.97700 });
+  };
 
 	return (
 		<Container dark={user.dark}>
@@ -141,9 +145,9 @@ const reversePrev = [...prev];
 		<Items dark={user.dark} color={state.color} isMobile={user.isMobile}>
 		지도
 
-		<Mapbox3DObject latitude={37.57796} longitude={126.97658} altitude={10}/>
+		<Mapbox3DObject latitude={coords.latitude} longitude={coords.longitude} altitude={10}/>
 		</Items>
-		
+		<button onClick={updatePosition}>위치 변경</button>
 		<Items dark={user.dark} color={state.color} isMobile={user.isMobile}>
 		log
 		{sensorData.map((con, idx) => (
