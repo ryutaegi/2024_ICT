@@ -26,13 +26,12 @@ const media = Object.keys(sizes).reduce((acc,label) => {
 
 
 const Items = styled.div`
-width : ${props => props.isMobile == 1 ? '80vw' : '200px'};
-height : ${props => props.isMobile == 1 ? '80vw' : '200px'};
+width : ${props => props.isMobile == true ? '80vw' : '40vw'};
+height : ${props => props.isMobile == true ? '80vw' : '42vh'};
 flex-grow : 0;
 flex-shrink : 0;
 color : white;
 overflow : hidden;
-padding-bottom : 20%;
 margin-bottom : 30px;
 text-align :center;
 border-radius : 30px;
@@ -67,6 +66,7 @@ const [sensorData, setSensorData] = useState([]);
   const joinOrCreateRoom = () => {
     socket.emit('joinOrCreateRoom', [user.MACid, 1]);
 	  //alert(user.MACid)
+	  //alert(user.isMobile)
   };
 
 
