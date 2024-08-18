@@ -8,7 +8,7 @@ import PasswordChangeModal from './Modal/PasswordChangeModal';
 import UsernameChangeModal from './Modal/UsernameChangeModal';
 import DarkToggle from '../component/DarkToggle.js';
 import Mapbox3DObject from '../mapbox/Mapbox3DObject.js';
-
+import VerticalSlider from '../component/VerticalSlider.js';
 const sizes = {
 	desktop :1024,
 	tablet : 768
@@ -28,8 +28,6 @@ const media = Object.keys(sizes).reduce((acc,label) => {
 const Items = styled.div`
 width : ${props => props.isMobile == true ? '80vw' : '40vw'};
 height : ${props => props.isMobile == true ? '80vw' : '42vh'};
-flex-grow : 0;
-flex-shrink : 0;
 color : white;
 overflow : hidden;
 margin-bottom : 30px;
@@ -51,6 +49,18 @@ width : 100vw;
 background-color : ${(props) => (props.dark? 'gray' : 'white')};
 `;
 
+const KeyButton = styled.div`
+display : flex;
+width : 60px;
+height : 20%;
+margin : 3px;
+background-color : ${(props) => (props.key == 'x' ? 'none' : 'rgb(200, 40, 40)')};
+font-size : 20px;
+justify-content : center;
+align-items : center;
+text-align : center;
+border-radius : 20%;
+`;
 const socket = io(process.env.REACT_APP_SERVER_WEBSOCKET);
 
 //const socket = io('http://localhost:5024');
@@ -101,7 +111,7 @@ const reversePrev = [...prev];
 	socket.on('message',(datas) => {
 	const type = datas.type;
 	
-	if(type == 1){
+		if(type == 1){
 		alert("send controlData");
 	}
 	if(type == 2){
@@ -161,6 +171,48 @@ const [coords, setCoords] = useState({ latitude: 37.57796, longitude: 126.97658 
 		</Items>
 		<Items dark={user.dark} color={state.color} isMobile={user.isMobile}>
 		<button onClick={sendControlData}>data send</button>
+		<div style={{display : 'flex', flexDirection : 'row'}}>
+		<VerticalSlider type={"F/B"}/>
+		
+		<div style={{FlexDirection : "column"}}>
+		<KeyButton key={"x"}>
+		
+		</KeyButton>
+		<KeyButton key={"a"}>
+		left
+		</KeyButton>
+		<KeyButton key={"x"}>
+		
+		</KeyButton>
+		</div>
+		
+		<div style={{FlexDirection : "column"}}>
+		<KeyButton key={"w"}>
+		front
+		</KeyButton>
+		<KeyButton key={"stop"}>
+		stop
+		</KeyButton>
+		<KeyButton key={"s"}>
+		back
+		</KeyButton>
+		</div>
+
+		<div style={{FlexDirection : "column"}}>
+		<KeyButton key={"x"}>
+		
+		</KeyButton>
+		<KeyButton key={"d"}>
+		right
+		</KeyButton>
+		<KeyButton key={"x"}>
+		
+		</KeyButton>
+		</div>
+
+
+		<VerticalSlider type={"L/R"}/>	
+		</div>
 		</Items>
 		<DarkToggle/>
 		</Container>
