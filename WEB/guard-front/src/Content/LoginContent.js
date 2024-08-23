@@ -54,7 +54,7 @@ display : flex;
 width : 60px;
 height : 20%;
 margin : 3px;
-background-color : ${(props) => (props.key == 'x' ? 'none' : 'rgb(200, 40, 40)')};
+background-color : ${props => props.keys == 'x' ? 'none' : props.pushed == false ? props.colors : props.pushedcolors };
 font-size : 20px;
 justify-content : center;
 align-items : center;
@@ -73,7 +73,9 @@ const [sensorData, setSensorData] = useState([]);
   
   const [roomStatus, setRoomStatus] = useState('');
   const [base64Image, setBase64Image] = useState('');
-  const joinOrCreateRoom = () => {
+const [pressedKey, setPressedKey] = useState('');
+
+const joinOrCreateRoom = () => {
     socket.emit('joinOrCreateRoom', [user.MACid, 1]);
 	  //alert(user.MACid)
 	  //alert(user.isMobile)
@@ -132,7 +134,22 @@ const reversePrev = [...prev];
       setRoomStatus(`Error: ${message}`);
     });
 
+	  const handleKeyUp = (event) => {
+    //  alert(`Key up: ${event.key}`);
+		  setPressedKey('');
+    };
+
+	  const handleKeyDown = (event) => {
+    //  alert(`Key pressed: ${event.key}`);
+		  setPressedKey(event.key);
+    };
+  window.addEventListener('keydown', handleKeyDown);
+
+  window.addEventListener('keyup', handleKeyUp);
+
     return () => {
+	    window.removeEventListener('keydown', handleKeyDown);
+	    window.removeEventListener('keyup', handleKeyUp);
       socket.off('message');
       socket.off('roomJoined');
       socket.off('error');
@@ -169,43 +186,45 @@ const [coords, setCoords] = useState({ latitude: 37.57796, longitude: 126.97658 
 	{roomStatus}
       </div>
 		</Items>
-		<Items dark={user.dark} color={state.color} isMobile={user.isMobile}>
+		
 		<button onClick={sendControlData}>data send</button>
-		<div style={{display : 'flex', flexDirection : 'row'}}>
+		<Items dark={user.dark} color={state.color} isMobile={user.isMobile}>
+		<div style={{display : 'flex', flexDirection : 'row', justifyContent : "center", paddingTop : "8%"}}>
 		<VerticalSlider type={"F/B"}/>
 		
-		<div style={{FlexDirection : "column"}}>
-		<KeyButton key={"x"}>
+		<div style={{FlexDirection : "column", marginTop : "10%"}}>
+		<KeyButton keys={"x"}>
 		
 		</KeyButton>
-		<KeyButton key={"a"}>
+		<KeyButton keys={"d"} pushed={pressedKey == 'a' ? true : false} colors={"rgb(255,0,0)"} pushedcolors={"rgb(255,180,180)"}>
 		left
 		</KeyButton>
-		<KeyButton key={"x"}>
+		<KeyButton keys={"x"}>
 		
 		</KeyButton>
 		</div>
 		
-		<div style={{FlexDirection : "column"}}>
-		<KeyButton key={"w"}>
+		<div style={{FlexDirection : "column", marginTop : "10%"}}>
+		<KeyButton keys={"d"} pushed={pressedKey == 'w' ? true : false} colors={"rgb(255,0,0)"} pushedcolors={"rgb(255,180,180)"}>
 		front
 		</KeyButton>
-		<KeyButton key={"stop"}>
+
+		<KeyButton keys={"d"} pushed={pressedKey == '' ? true : false} colors={"rgb(255,0,0)"} pushedcolors={"rgb(255,180,180)"}>
 		stop
 		</KeyButton>
-		<KeyButton key={"s"}>
+		<KeyButton keys={"d"} pushed={pressedKey == 's' ? true : false} colors={"rgb(255,0,0)"} pushedcolors={"rgb(255,180,180)"}>
 		back
 		</KeyButton>
 		</div>
 
-		<div style={{FlexDirection : "column"}}>
-		<KeyButton key={"x"}>
+		<div style={{FlexDirection : "column",marginTop : "10%"}}>
+		<KeyButton keys={"x"}>
 		
 		</KeyButton>
-		<KeyButton key={"d"}>
+		<KeyButton keys={"d"} pushed={pressedKey == 'd' ? true : false} colors={"rgb(255,0,0)"} pushedcolors={"rgb(255,180,180)"}>
 		right
 		</KeyButton>
-		<KeyButton key={"x"}>
+		<KeyButton keys={"x"}>
 		
 		</KeyButton>
 		</div>
