@@ -6,10 +6,10 @@ const VerticalSlider = ({ type, setControlData, controlData }) => {
   const handleChange = (event) => {
     setValue(event.target.value);
     if(type == "L/R"){
-	  setControlData([controlData[0], event.target.value, controlData[2], controlData[3]])
+	  setControlData([controlData[0], parseInt(event.target.value), controlData[2], controlData[3], controlData[4]])
     }
     if(type == "F/B"){
-	  setControlData([event.target.value, controlData[1], controlData[2], controlData[3]])
+	  setControlData([parseInt(event.target.value), controlData[1], controlData[2], controlData[3], controlData[4]])
     }
     };
 

@@ -68,7 +68,7 @@ const socket = io(process.env.REACT_APP_SERVER_WEBSOCKET);
 const LoginContent = () => {
 	const { state } = useContext(ColorContext);
 	const [user, setUser] = useContext(UserContext);
-const [controlData, setControlData] = useState([50,50,0,0]);
+const [controlData, setControlData] = useState([50,50,0,0,0]);
 const [sensorData, setSensorData] = useState([]);
   
   const [roomStatus, setRoomStatus] = useState('');
@@ -82,26 +82,34 @@ const joinOrCreateRoom = () => {
   };
 
 
+
 const sendControlData = () => {
-	socket.emit('message',{room : user.MACid, datas : {type : 1, datas : controlData}});
-alert(JSON.stringify(controlData))
+	let sendData = [...controlData];
+ //alert(JSON.stringify(controlData))
+	if(pressedKey == ''){ //stop
+	sendData[0] = 0;
+	sendData[1] = 0;
+	}
+	if(pressedKey == 'a'){ //left
+	sendData[0] = 0;
+	sendData[1] = parseInt(sendData[1]) * (-1)
+	}
+	if(pressedKey == 'd'){
+	sendData[0] = 0;
+	}
+	if(pressedKey == 'w'){
+	sendData[1] = 0;
+	}
+	if(pressedKey == 's'){
+	sendData[0] = parseInt(sendData[0]) * (-1)
+	sendData[1] = 0;
+	}
+
+	socket.emit('message',{room : user.MACid, datas : {type : 1, datas : sendData}});
+//alert(JSON.stringify(sendData))
 }
 
-const imageFlag = () => {
-setControlData((prev) => {
-const newPrev = [...prev];
-	newPrev[0] = 1;
-	return newPrev;
-});
 
-	setTimeout(() => {
-setControlData((prev) => {
-const reversePrev = [...prev];
-	reversePrev[0] = 0;
-	return reversePrev;
-});
-	} , 10000);
-};
 
   useEffect(() => {
 	 
@@ -114,9 +122,9 @@ const reversePrev = [...prev];
 	socket.on('message',(datas) => {
 	const type = datas.type;
 	
-		if(type == 1){
-		alert("send controlData");
-	}
+		//if(type == 1){
+		//alert("send controlData");
+	//}
 	if(type == 2){
 	//alert('type2 : ', datas.datas);
 		setBase64Image(datas.datas[0]);
@@ -148,14 +156,26 @@ const reversePrev = [...prev];
 
   window.addEventListener('keyup', handleKeyUp);
 
+	 
     return () => {
 	    window.removeEventListener('keydown', handleKeyDown);
 	    window.removeEventListener('keyup', handleKeyUp);
-      socket.off('message');
+	socket.off('message');
       socket.off('roomJoined');
       socket.off('error');
     };
   }, []);
+
+useEffect(() => {
+  const interval = setInterval(() => {
+		  sendControlData();
+	  },10)
+	 
+	return () => {
+clearInterval(interval);
+	}
+}, [controlData, pressedKey]);
+
 
 const [coords, setCoords] = useState({ latitude: 37.57796, longitude: 126.97658 });
 
@@ -167,7 +187,7 @@ const [coords, setCoords] = useState({ latitude: 37.57796, longitude: 126.97658 
 		<Container dark={user.dark}>
 		<UsernameChangeModal MACid={user.MACid} isOpen={user.UsernameModal} onClose={() => setUser((prev) => ({...prev, UsernameModal : false}))}/>
 		<PasswordChangeModal MACid={user.MACid} isOpen={user.pwModal} onClose={()=> setUser((prev) => ({...prev, pwModal : false}))}/>
-		<Items isMobile={user.isMobile} onClick={imageFlag} dark={user.dark} color={state.color}>
+		<Items isMobile={user.isMobile} dark={user.dark} color={state.color}>
 		{base64Image ?	<img src={`data:image/png;base64,${base64Image}`} style={{width : '100%', height : '100%'}}/> : 'loading' }
 			</Items>
 		<Items dark={user.dark} color={state.color} isMobile={user.isMobile}>
