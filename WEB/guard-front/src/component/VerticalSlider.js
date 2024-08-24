@@ -1,11 +1,17 @@
 import React, { useState } from 'react';
 
-const VerticalSlider = ( props ) => {
+const VerticalSlider = ({ type, setControlData, controlData }) => {
   const [value, setValue] = useState(50);
 
   const handleChange = (event) => {
     setValue(event.target.value);
-  };
+    if(type == "L/R"){
+	  setControlData([controlData[0], event.target.value, controlData[2], controlData[3]])
+    }
+    if(type == "F/B"){
+	  setControlData([event.target.value, controlData[1], controlData[2], controlData[3]])
+    }
+    };
 
   return (
     <div style={{ height: '300px',margin : '0 auto',  textAlign: 'center', display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
@@ -24,7 +30,7 @@ const VerticalSlider = ( props ) => {
 	background: 'transparent', // 기본 배경을 투명으로 설정
         }}
       />
-      <p>{props.type}: {value}</p>
+      <p>{type}: {value}</p>
       <style jsx>{`
         input[type='range']::-webkit-slider-runnable-track {
           width: 100%;

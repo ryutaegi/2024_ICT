@@ -68,7 +68,7 @@ const socket = io(process.env.REACT_APP_SERVER_WEBSOCKET);
 const LoginContent = () => {
 	const { state } = useContext(ColorContext);
 	const [user, setUser] = useContext(UserContext);
-const [controlData, setControlData] = useState([0,0,0]);
+const [controlData, setControlData] = useState([50,50,0,0]);
 const [sensorData, setSensorData] = useState([]);
   
   const [roomStatus, setRoomStatus] = useState('');
@@ -84,6 +84,7 @@ const joinOrCreateRoom = () => {
 
 const sendControlData = () => {
 	socket.emit('message',{room : user.MACid, datas : {type : 1, datas : controlData}});
+alert(JSON.stringify(controlData))
 }
 
 const imageFlag = () => {
@@ -190,7 +191,8 @@ const [coords, setCoords] = useState({ latitude: 37.57796, longitude: 126.97658 
 		<button onClick={sendControlData}>data send</button>
 		<Items dark={user.dark} color={state.color} isMobile={user.isMobile}>
 		<div style={{display : 'flex', flexDirection : 'row', justifyContent : "center", paddingTop : "8%"}}>
-		<VerticalSlider type={"F/B"}/>
+
+		<VerticalSlider controlData={controlData} setControlData={setControlData} type={"F/B"}/>	
 		
 		<div style={{FlexDirection : "column", marginTop : "10%"}}>
 		<KeyButton keys={"x"}>
@@ -230,7 +232,7 @@ const [coords, setCoords] = useState({ latitude: 37.57796, longitude: 126.97658 
 		</div>
 
 
-		<VerticalSlider type={"L/R"}/>	
+		<VerticalSlider controlData={controlData} setControlData={setControlData} type={"L/R"}/>	
 		</div>
 		</Items>
 		<DarkToggle/>
