@@ -208,7 +208,6 @@ clearInterval(interval);
       </div>
 		</Items>
 		
-		<button onClick={sendControlData}>data send</button>
 		<Items dark={user.dark} color={state.color} isMobile={user.isMobile}>
 		<div style={{display : 'flex', flexDirection : 'row', justifyContent : "center", paddingTop : "8%"}}>
 
@@ -255,7 +254,17 @@ clearInterval(interval);
 		<VerticalSlider controlData={controlData} setControlData={setControlData} type={"L/R"}/>	
 		</div>
 		</Items>
+		<div style={{width : '100%', flexDirection : 'row', alignItems : 'center', justifyContent : 'center'}}>
+		<div style={{maring : '0 auto',display : 'flex',alignItems : 'center', justifyContent : 'center', flexDirection : 'row'}}>	
+		<div style={{width : '100px'}} >
+		{user.dark == true ? 
+		"dark mode" : 
+		 "white mode"}
+		</div>
 		<DarkToggle/>
+
+		</div>
+		</div>
 		</Container>
 	)
 }
