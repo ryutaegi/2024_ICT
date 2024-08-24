@@ -75,6 +75,7 @@ const [sensorData, setSensorData] = useState([]);
   const [base64Image, setBase64Image] = useState('');
 const [pressedKey, setPressedKey] = useState('');
 
+const [coords, setCoords] = useState({ latitude: 37.57796, longitude: 126.97658 });
 const joinOrCreateRoom = () => {
     socket.emit('joinOrCreateRoom', [user.MACid, 1]);
 	  //alert(user.MACid)
@@ -128,7 +129,6 @@ const sendControlData = () => {
 	if(type == 2){
 	//alert('type2 : ', datas.datas);
 		setBase64Image(datas.datas[0]);
-		//setBase64Image("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAUAAAAFCAYAAACNbyblAAAAHElEQVQI12P4//8/w38GIAXDIBKE0DHxgljNBAAO9TXL0Y4OHwAAAABJRU5ErkJggg==");
 	//alert(datas.datas[0]);
 	//alert(base64Image);
 	}
@@ -136,6 +136,7 @@ const sendControlData = () => {
 	//alert('type3 : ');
 		//alert(JSON.stringify(datas.datas));
 	setSensorData(prev=> [...prev, JSON.stringify(datas.datas)])
+	setCoords({longitude : datas.datas[0], latitude : datas.datas[1]});
 	}
 	});
 	  
@@ -177,7 +178,6 @@ clearInterval(interval);
 }, [controlData, pressedKey]);
 
 
-const [coords, setCoords] = useState({ latitude: 37.57796, longitude: 126.97658 });
 
   const updatePosition = () => {
     setCoords({ latitude: 37.57800, longitude: 126.97700 });

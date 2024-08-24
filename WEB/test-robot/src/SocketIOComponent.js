@@ -52,37 +52,39 @@ const encodeImageFileAsURL = (url) => {
     }; 
 	 
   // 메시지 전송 함수
-  const sendMessage = () => {
+  const sendMessage1 = () => {
     if (socket) {
-      socket.emit('message', {room : 'AA:11:BB:22:CC:33', datas : { type : 3, datas : [120,-40,10.0001,123456,0.0012,inputMessage]} } );
+      socket.emit('message', {room : 'AA:11:BB:22:CC:33', datas : { type : 3, datas : [126.97,37.57800,0,10.1,10,inputMessage]} } );
+      setInputMessage('');
+    }
+  };
+const sendMessage2 = () => {
+    if (socket) {
+      socket.emit('message', {room : 'AA:11:BB:22:CC:33', datas : { type : 3, datas : [126.97,37.57900,0,10.1,10,inputMessage]} } );
+      setInputMessage('');
       setInputMessage('');
     }
   };
 
+
   const sendImage = () => {
 
-//const imageUrl = 'https://images.unsplash.com/photo-1616486250774-dc4033b3bb26?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=MnwzNjUyOXwwfDF8c2VhcmNofDl8fGxhcmdlJTIwYnVpbGRpbmd8ZW58MHx8fHwxNjg4NjM2Mzkz&ixlib=rb-4.0.3&q=80&w=1080';
-//alert(imageUrl);
-  //  encodeImageFileAsURL(imageUrl).then((base64Data) => {
       // 웹소켓을 통해 base64 데이터 전송
       socket.emit('message', { room: 'AA:11:BB:22:CC:33', datas: { type: 2, datas: [base64Image, 'image/image.png'] } });
-   // }).catch(error => {
-    //  console.error('Error encoding file:', error);
-    //});
 
   };	
 
-	 // <img style={{height : "100px", width : "100px"}} src={`data:image/png;base64,${base64Image}`} alt="Complex Image" />
   return (
     <div>
-      <h2>SENSOR DATA TESTER</h2>
+      <h2>DATA TESTER</h2>
       <div>
         <input
           type="text"
           value={inputMessage}
           onChange={(e) => setInputMessage(e.target.value)}
         />
-        <button onClick={sendMessage}>Send</button>
+        <button onClick={sendMessage1}>Send1</button>
+        <button onClick={sendMessage2}>Send2</button>
       <button onClick={sendImage}>imageSend</button>
 	  </div>
       <div>
