@@ -54,13 +54,13 @@ const encodeImageFileAsURL = (url) => {
   // 메시지 전송 함수
   const sendMessage1 = () => {
     if (socket) {
-      socket.emit('message', {room : 'AA:11:BB:22:CC:33', datas : { type : 3, datas : [126.97,37.57800,0,10.1,10,inputMessage]} } );
+      socket.emit('message', {room : 'AA:11:BB:22:CC:33', datas : { type : 3, datas : [127.07691,37.632,0,10.1,10,inputMessage]} } );
       setInputMessage('');
     }
   };
 const sendMessage2 = () => {
     if (socket) {
-      socket.emit('message', {room : 'AA:11:BB:22:CC:33', datas : { type : 3, datas : [126.97,37.57900,0,10.1,10,inputMessage]} } );
+      socket.emit('message', {room : 'AA:11:BB:22:CC:33', datas : { type : 3, datas : [127.07691, 37.63160,1,10.1,10,inputMessage]} } );
       setInputMessage('');
       setInputMessage('');
     }

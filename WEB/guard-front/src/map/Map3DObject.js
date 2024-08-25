@@ -6,7 +6,7 @@ import Map from 'react-map-gl/maplibre';
 import { Canvas } from 'react-three-map/maplibre';
 import { Box } from '@react-three/drei';
 
-const Mapbox3DObject = ({ latitude, longitude }) => {
+const Map3DObject = ({ latitude, longitude, yaw }) => {
 
   // 위도와 경도를 3D 위치로 변환하는 함수
   const convertCoordinatesToPosition = (lat, lon) => {
@@ -32,18 +32,19 @@ const Mapbox3DObject = ({ latitude, longitude }) => {
           args={['#ffffff', '#60666C']}
           position={[1, 4.5, 3]}
         />
-        <object3D scale={10}>
-          <Box position={convertCoordinatesToPosition(latitude, longitude)}>
-            <meshStandardMaterial attach="material" color="green" />
-          </Box>
-          <Box position={convertCoordinatesToPosition(latitude + 0.0001, longitude + 0.0002)}>
-            <meshStandardMaterial attach="material" color="blue" />
-          </Box>
-        </object3D>
+
+	 <object3D scale={10} rotation={[0, yaw, 0]}>
+  <mesh position={convertCoordinatesToPosition(latitude, longitude)}>
+    <boxGeometry args={[1, 2, 0.5]} /> {/* 가로 2, 세로 1, 깊이 0.5 */}
+    <meshStandardMaterial attach="material" color="green" />
+  </mesh>
+</object3D>
+ 
       </Canvas>
     </Map>
   );
 };
 
-export default Mapbox3DObject;
+export default Map3DObject;
+
 

@@ -7,7 +7,7 @@ import io from 'socket.io-client';
 import PasswordChangeModal from './Modal/PasswordChangeModal';
 import UsernameChangeModal from './Modal/UsernameChangeModal';
 import DarkToggle from '../component/DarkToggle.js';
-import Mapbox3DObject from '../mapbox/Mapbox3DObject.js';
+import Map3DObject from '../map/Map3DObject.js';
 import VerticalSlider from '../component/VerticalSlider.js';
 const sizes = {
 	desktop :1024,
@@ -82,7 +82,7 @@ const [sensorData, setSensorData] = useState([]);
   const [base64Image, setBase64Image] = useState('');
 const [pressedKey, setPressedKey] = useState('');
 
-const [coords, setCoords] = useState({ latitude: 37.57796, longitude: 126.97658 });
+const [coords, setCoords] = useState({ latitude: 37.63160, longitude: 127.075, yaw : 0  });
 const joinOrCreateRoom = () => {
     socket.emit('joinOrCreateRoom', [user.MACid, 1]);
 	  //alert(user.MACid)
@@ -143,7 +143,7 @@ const sendControlData = () => {
 	//alert('type3 : ');
 		//alert(JSON.stringify(datas.datas));
 	setSensorData(prev=> [...prev, JSON.stringify(datas.datas)])
-	setCoords({longitude : datas.datas[0], latitude : datas.datas[1]});
+	setCoords({longitude : datas.datas[0], latitude : datas.datas[1], yaw : datas.datas[2]});
 	}
 	});
 	  
@@ -187,7 +187,7 @@ clearInterval(interval);
 
 
   const updatePosition = () => {
-    setCoords({ latitude: 37.57800, longitude: 126.97700 });
+    setCoords({ latitude: 37.63160, longitude: 127.07691, yaw : 0.6 });
   };
 
 	return (
@@ -200,7 +200,7 @@ clearInterval(interval);
 		<Items dark={user.dark} color={state.color} isMobile={user.isMobile}>
 		지도
 
-		<Mapbox3DObject latitude={coords.latitude} longitude={coords.longitude} altitude={10}/>
+		<Map3DObject latitude={coords.latitude} longitude={coords.longitude} yaw={coords.yaw}/>
 		</Items>
 		<button onClick={updatePosition}>위치 변경</button>
 		<Items dark={user.dark} color={state.color} isMobile={user.isMobile}>
