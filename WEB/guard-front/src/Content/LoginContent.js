@@ -48,18 +48,25 @@ padding : 10px;
 width : 100vw;
 background-color : ${(props) => (props.dark? 'gray' : 'white')};
 `;
-
 const KeyButton = styled.div`
-display : flex;
-width : 60px;
-height : 20%;
-margin : 3px;
-background-color : ${props => props.keys == 'x' ? 'none' : props.pushed == false ? props.colors : props.pushedcolors };
-font-size : 20px;
-justify-content : center;
-align-items : center;
-text-align : center;
-border-radius : 20%;
+  display: flex;
+  width: 60px;
+  height: 60px;
+  margin: 5px;
+  background: ${props => props.keys == 'x' ? 'transparent' : props.pushed == false ? props.colors : props.pushedcolors};
+  background-image: ${props => props.keys != 'x' && props.pushed == false ? 'linear-gradient(145deg, #f0f0f0, #cacaca)' : 'none'};
+  font-size: 20px;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  border-radius: 15px;
+  box-shadow: ${props => props.keys == 'x' ? 'none' : (props.pushed == false ? '4px 4px 8px rgba(0, 0, 0, 0.2)' : 'inset 2px 2px 5px rgba(0, 0, 0, 0.3)')};
+  transition: background 0.3s ease, box-shadow 0.3s ease;
+
+  &:active {
+    background-color: ${props => props.pushedcolors};
+    box-shadow: inset 2px 2px 5px rgba(0, 0, 0, 0.3);
+  }
 `;
 const socket = io(process.env.REACT_APP_SERVER_WEBSOCKET);
 
@@ -217,7 +224,7 @@ clearInterval(interval);
 		<KeyButton keys={"x"}>
 		
 		</KeyButton>
-		<KeyButton keys={"d"} pushed={pressedKey == 'a' ? true : false} colors={"rgb(255,0,0)"} pushedcolors={"rgb(255,180,180)"}>
+		<KeyButton keys={"d"} pushed={pressedKey == 'a' ? true : false} colors={"rgb(255,0,0)"} pushedcolors={"rgb(255,150,150)"}>
 		left
 		</KeyButton>
 		<KeyButton keys={"x"}>
@@ -226,14 +233,14 @@ clearInterval(interval);
 		</div>
 		
 		<div style={{FlexDirection : "column", marginTop : "10%"}}>
-		<KeyButton keys={"d"} pushed={pressedKey == 'w' ? true : false} colors={"rgb(255,0,0)"} pushedcolors={"rgb(255,180,180)"}>
+		<KeyButton keys={"d"} pushed={pressedKey == 'w' ? true : false} colors={"rgb(255,0,0)"} pushedcolors={"rgb(255,150,150)"}>
 		front
 		</KeyButton>
 
-		<KeyButton keys={"d"} pushed={pressedKey == '' ? true : false} colors={"rgb(255,0,0)"} pushedcolors={"rgb(255,180,180)"}>
+		<KeyButton keys={"d"} pushed={pressedKey == '' ? true : false} colors={"rgb(255,0,0)"} pushedcolors={"rgb(255,100,100)"}>
 		stop
 		</KeyButton>
-		<KeyButton keys={"d"} pushed={pressedKey == 's' ? true : false} colors={"rgb(255,0,0)"} pushedcolors={"rgb(255,180,180)"}>
+		<KeyButton keys={"d"} pushed={pressedKey == 's' ? true : false} colors={"rgb(255,0,0)"} pushedcolors={"rgb(255,150,150)"}>
 		back
 		</KeyButton>
 		</div>
@@ -242,7 +249,7 @@ clearInterval(interval);
 		<KeyButton keys={"x"}>
 		
 		</KeyButton>
-		<KeyButton keys={"d"} pushed={pressedKey == 'd' ? true : false} colors={"rgb(255,0,0)"} pushedcolors={"rgb(255,180,180)"}>
+		<KeyButton keys={"d"} pushed={pressedKey == 'd' ? true : false} colors={"rgb(255,0,0)"} pushedcolors={"rgb(255,150,150)"}>
 		right
 		</KeyButton>
 		<KeyButton keys={"x"}>

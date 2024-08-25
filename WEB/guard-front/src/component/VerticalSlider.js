@@ -6,10 +6,10 @@ const VerticalSlider = ({ type, setControlData, controlData }) => {
   const handleChange = (event) => {
     setValue(event.target.value);
     if(type == "L/R"){
-	  setControlData([controlData[0], parseInt(event.target.value), controlData[2], controlData[3], controlData[4]])
+          setControlData([controlData[0], parseInt(event.target.value), controlData[2], controlData[3], controlData[4]])
     }
     if(type == "F/B"){
-	  setControlData([parseInt(event.target.value), controlData[1], controlData[2], controlData[3], controlData[4]])
+          setControlData([parseInt(event.target.value), controlData[1], controlData[2], controlData[3], controlData[4]])
     }
     };
 
@@ -22,12 +22,12 @@ const VerticalSlider = ({ type, setControlData, controlData }) => {
         value={value}
         onChange={handleChange}
         style={{
-          writingMode: 'bt-lr', // 슬라이더를 세로로 변경
-          WebkitAppearance: 'slider-vertical', // 웹킷 브라우저에서 세로 슬라이더 지원
-          width: '3px', // 슬라이더의 너비(굵기)
-          height: '100%', // 슬라이더의 높이
+          writingMode: 'bt-lr', // 슬라이더를 세로로 변경
+          WebkitAppearance: 'slider-vertical', // 웹킷 브라우저에서 세로 슬라이더 지원
+          width: '3px', // 슬라이더의 너비(굵기)
+          height: '100%', // 슬라이더의 높이
         borderRadius : '50%',  
-	background: 'transparent', // 기본 배경을 투명으로 설정
+        background: 'transparent', // 기본 배경을 투명으로 설정
         }}
       />
       <p>{type}: {value}</p>
@@ -36,20 +36,21 @@ const VerticalSlider = ({ type, setControlData, controlData }) => {
           width: 100%;
           height: 100%;
           cursor: pointer;
-          background: rgb(255,60,60); // 트랙 배경색을 빨간색으로 변경
+          background: transparent;
         }
         input[type='range']::-webkit-slider-thumb {
           height: 20px;
           width: 20px;
           border-radius: 50%;
-          background: red; // 슬라이더 버튼 색상을 빨간색으로 변경
+          background: #ff44b4b; // 슬라이더 버튼 색상을 빨간색으로 변경
           cursor: pointer;
-          margin-left: -8px; /* 슬라이더 버튼 위치 조정 */
+	  box-shadow : 0 2px 4px rgba(0,0,0,0.2);
+          margin-left: -8px; /* 슬라이더 버튼 위치 조정 */
         }
       input[type='range']:focus {
           outline: none;
         }
-	  `}</style>
+          `}</style>
     </div>
   );
 };
