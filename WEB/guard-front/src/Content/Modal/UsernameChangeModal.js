@@ -1,14 +1,14 @@
 import React, { useState } from 'react';
 import './PasswordChangeModal.css'; // 스타일링을 위한 CSS 파일
 import axios from 'axios';
-const UsernameChangeModal = ({username, MACid, isOpen, onClose }) => {
-    const [newUsername, setNewUsername] = useState(username);
+const UsernameChangeModal = ({setUser, MACid, isOpen, onClose }) => {
+    const [newUsername, setNewUsername] = useState('');
 
     const handleNewUsername = (e) => setNewUsername(e.target.value);
 
 	const submitUsername = async () => {
     try {
-	    alert(process.env.REACT_APP_SERVER_MAIN+'/user/updateUsername');
+	   // alert(process.env.REACT_APP_SERVER_MAIN+'/user/updateUsername');
       const response = await axios.patch('/user/updateUsername', {
         macID: MACid,
         newUsername: newUsername,
@@ -28,7 +28,8 @@ const UsernameChangeModal = ({username, MACid, isOpen, onClose }) => {
     const handleSubmit = (e) => {
         e.preventDefault();
         submitUsername();// 여기에 비밀번호 변경 로직을 추가하세요 (예: API 호출)
-        onClose();
+        setUser((prev)=> ({...prev, username : newUsername}))
+	onClose();
     };
 
     if (!isOpen) return null;

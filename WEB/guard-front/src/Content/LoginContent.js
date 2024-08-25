@@ -192,7 +192,7 @@ clearInterval(interval);
 
 	return (
 		<Container dark={user.dark}>
-		<UsernameChangeModal MACid={user.MACid} isOpen={user.UsernameModal} onClose={() => setUser((prev) => ({...prev, UsernameModal : false}))}/>
+		<UsernameChangeModal MACid={user.MACid} setUser={setUser} isOpen={user.UsernameModal} onClose={() => setUser((prev) => ({...prev, UsernameModal : false}))}/>
 		<PasswordChangeModal MACid={user.MACid} isOpen={user.pwModal} onClose={()=> setUser((prev) => ({...prev, pwModal : false}))}/>
 		<Items isMobile={user.isMobile} dark={user.dark} color={state.color}>
 		{base64Image ?	<img src={`data:image/png;base64,${base64Image}`} style={{width : '100%', height : '100%'}}/> : 'loading' }
