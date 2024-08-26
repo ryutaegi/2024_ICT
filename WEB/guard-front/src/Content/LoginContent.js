@@ -177,7 +177,7 @@ const sendControlData = () => {
 useEffect(() => {
   const interval = setInterval(() => {
 		  sendControlData();
-	  },10)
+	  },20)
 	 
 	return () => {
 clearInterval(interval);
