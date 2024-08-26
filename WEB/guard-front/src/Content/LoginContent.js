@@ -202,7 +202,6 @@ clearInterval(interval);
 
 		<Map3DObject latitude={coords.latitude} longitude={coords.longitude} yaw={coords.yaw}/>
 		</Items>
-		<button onClick={updatePosition}>위치 변경</button>
 		<Items dark={user.dark} color={state.color} isMobile={user.isMobile}>
 		log
 		{sensorData.map((con, idx) => (
