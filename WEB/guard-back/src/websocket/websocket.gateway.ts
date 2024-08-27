@@ -66,7 +66,7 @@ async isMACid(authDTO : AuthDTO.SignUp ): Promise<boolean> {
   handleMessage(client: Socket, data: {room : string, datas : any}) {
     console.log(data);
     console.log(data.datas);
-    this.server.to(data.room).emit('message', data.datas);
+    client.to(data.room).emit('message', data.datas);
     return 'websocket connected';
   }
 }
