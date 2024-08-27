@@ -9,6 +9,7 @@ import UsernameChangeModal from './Modal/UsernameChangeModal';
 import DarkToggle from '../component/DarkToggle.js';
 import Map3DObject from '../map/Map3DObject.js';
 import VerticalSlider from '../component/VerticalSlider.js';
+import LoginComponent from '../component/LoginComponent';
 const sizes = {
 	desktop :1024,
 	tablet : 768
@@ -123,7 +124,7 @@ const sendControlData = () => {
 	 
 	  joinOrCreateRoom();
     socket.on('roomJoined', (room) => {
-      setRoomStatus(`Joined room ${room} successfully`);
+      console.log(`Joined room ${room} successfully`);
   //alert("socket")  
     });
 	sendControlData();
@@ -204,11 +205,7 @@ clearInterval(interval);
 		</Items>
 		<Items dark={user.dark} color={state.color} isMobile={user.isMobile}>
 		log
-		{sensorData.map((con, idx) => (
-			<div key={idx}>
-			{JSON.stringify(con)}
-			</div>
-		))}
+		<LoginComponent sensorData={sensorData}/>
 	<div>
 	{roomStatus}
       </div>
