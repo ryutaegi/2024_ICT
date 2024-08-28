@@ -45,6 +45,22 @@ const LogHeaderCell = styled.th`
   background-color: #ddd;
   font-weight: bold;
 `;
+
+const formatData = (data) => {
+  return data.map((item, index) => {
+    if (typeof item === 'number') {
+      return item.toFixed(2); // 소수점 두 자리 제한
+    }
+    return item;
+  });
+};
+
+const splitData = (data) => {
+  const firstPart = data.slice(0, 8).join(', ');
+  const secondPart = data.slice(8).join(', ');
+  return `${firstPart}\n${secondPart}`;
+};
+
 const trimEdges = (str) => {
     if (str.length > 2) {
       return str.substring(1, str.length - 1);
@@ -66,7 +82,9 @@ const LogComponent = ({ sensorData }) => {
           {sensorData.map((con, idx) => (
             <LogRow key={idx}>
               <TimestampCell>{new Date().toLocaleTimeString('en-GB', { hour12: false })}</TimestampCell>
-              <LogCell>{trimEdges(JSON.stringify(con))}</LogCell>
+              <LogCell>
+                {splitData(formatData(trimEdges(JSON.stringify(con)).split(',')))}
+              </LogCell>
             </LogRow>
           ))}
           <tr ref={logEndRef} />

@@ -33,12 +33,12 @@ const Map3DObject = ({ latitude, longitude, yaw }) => {
           position={[1, 4.5, 3]}
         />
 
-	 <object3D scale={10} rotation={[0, yaw, 0]}>
-  <mesh position={convertCoordinatesToPosition(latitude, longitude)}>
-    <boxGeometry args={[1, 2, 0.5]} /> {/* 가로 2, 세로 1, 깊이 0.5 */}
-    <meshStandardMaterial attach="material" color="green" />
-  </mesh>
-</object3D>
+        <object3D scale={10} rotation={[0, yaw-3.142, 0]}>
+          <mesh position={convertCoordinatesToPosition(latitude, longitude)}>
+           <cylinderGeometry args={[0.5, 0.5, 0.5, 3]} /> {/* 윗면 반지름 0.5, 아랫면 반지름 0.5, 높이 2, 세그먼트 3 */} 
+	  <meshStandardMaterial attach="material" color="red" />
+          </mesh>
+        </object3D>
  
       </Canvas>
     </Map>
@@ -46,5 +46,4 @@ const Map3DObject = ({ latitude, longitude, yaw }) => {
 };
 
 export default Map3DObject;
-
 
