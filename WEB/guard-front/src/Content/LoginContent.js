@@ -10,6 +10,8 @@ import DarkToggle from '../component/DarkToggle.js';
 import Map3DObject from '../map/Map3DObject.js';
 import VerticalSlider from '../component/VerticalSlider.js';
 import LoginComponent from '../component/LoginComponent';
+import HorizontalToggle from '../component/HorizontalToggle';
+
 const sizes = {
 	desktop :1024,
 	tablet : 768
@@ -255,6 +257,7 @@ clearInterval(interval);
 
 
 		<VerticalSlider controlData={controlData} setControlData={setControlData} type={"L/R"}/>	
+
 		</div>
 		</Items>
 		<div style={{width : '100%', flexDirection : 'row', alignItems : 'center', justifyContent : 'center'}}>
