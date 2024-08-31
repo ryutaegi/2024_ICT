@@ -33,7 +33,7 @@ const Map3DObject = ({ latitude, longitude, yaw }) => {
           position={[1, 4.5, 3]}
         />
 
-        <object3D scale={10} rotation={[0, yaw-3.142, 0]}>
+        <object3D scale={10} rotation={[0, yaw, 0]}>
           <mesh position={convertCoordinatesToPosition(latitude, longitude)}>
            <cylinderGeometry args={[0.5, 0.5, 0.5, 3]} /> {/* 윗면 반지름 0.5, 아랫면 반지름 0.5, 높이 2, 세그먼트 3 */} 
 	  <meshStandardMaterial attach="material" color="red" />

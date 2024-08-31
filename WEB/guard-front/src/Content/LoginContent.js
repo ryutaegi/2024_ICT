@@ -257,8 +257,18 @@ clearInterval(interval);
 
 
 		<VerticalSlider controlData={controlData} setControlData={setControlData} type={"L/R"}/>	
-
-		</div>
+		<div style={{ 
+  display: 'flex', 
+  flexDirection: 'column',  // 세로로 배치
+  alignItems: 'center', 
+  justifyContent: 'space-around', 
+  height: '280px',
+  marginRight : '8%'// 부모 요소에 충분한 높이 설정
+}}>
+  <HorizontalToggle colors={"#FFD400"} style={{ marginBottom: '20px' }} />  {/* 두 토글 사이 간격을 위해 margin 추가 */}
+  <HorizontalToggle colors={"#1DF300"} />
+</div>
+</div>
 		</Items>
 		<div style={{width : '100%', flexDirection : 'row', alignItems : 'center', justifyContent : 'center'}}>
 		<div style={{maring : '0 auto',display : 'flex',alignItems : 'center', justifyContent : 'center', flexDirection : 'row'}}>	

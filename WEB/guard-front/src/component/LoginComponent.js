@@ -47,7 +47,7 @@ const LogHeaderCell = styled.th`
 `;
 
 const formatData = (data) => {
-  return data.map((item, index) => {
+  return data.map((item) => {
     if (typeof item === 'number') {
       return item.toFixed(2); // 소수점 두 자리 제한
     }
@@ -56,8 +56,9 @@ const formatData = (data) => {
 };
 
 const splitData = (data) => {
-  const firstPart = data.slice(0, 8).join(', ');
-  const secondPart = data.slice(8).join(', ');
+  const formattedData = formatData(data); 
+  const firstPart = formattedData.slice(0, 8).join(', ');
+  const secondPart = formattedData.slice(8).join(', ');
   return `${firstPart}\n${secondPart}`;
 };
 
@@ -67,6 +68,7 @@ const trimEdges = (str) => {
     }
     return str;
   };
+  
 const LogComponent = ({ sensorData }) => {
   const logEndRef = useRef(null);
 
@@ -83,7 +85,7 @@ const LogComponent = ({ sensorData }) => {
             <LogRow key={idx}>
               <TimestampCell>{new Date().toLocaleTimeString('en-GB', { hour12: false })}</TimestampCell>
               <LogCell>
-                {splitData(formatData(trimEdges(JSON.stringify(con)).split(',')))}
+                {splitData(trimEdges(JSON.stringify(con)).split(',').map(item => parseFloat(item) || item))}
               </LogCell>
             </LogRow>
           ))}

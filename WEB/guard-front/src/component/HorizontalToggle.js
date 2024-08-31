@@ -11,12 +11,12 @@ const ToggleContainer = styled.div`
     width: 24px;
     height: 50px;
     border-radius: 30px;
-    background-color: #FFD400;
+    background-color: ${props=>props.colors};
     transition: background-color 0.5s;
   }
 
   .toggle--checked {
-    background-color: rgb(50, 50, 50);
+    background-color: rgb(240, 240, 240);
   }
 
   .toggle-circle {
@@ -35,14 +35,14 @@ const ToggleContainer = styled.div`
   }
 `;
 
-const HorizontalToggle = () => {
+const HorizontalToggle = ({colors}) => {
   const [user, setUser] = useContext(UserContext);
-  const [tf, setTf] = useState(false);
+  const [tf, setTf] = useState(true);
   const ToggleClick = () => {
 	setTf(!tf);
   }
 	return (
-    <ToggleContainer onClick={ToggleClick}>
+    <ToggleContainer colors={colors} onClick={ToggleClick}>
       <div className={`toggle-container ${tf ? 'toggle--checked' : ''}`} />
       <div className={`toggle-circle ${tf ? 'toggle--checked' : ''}`} />
     </ToggleContainer>
