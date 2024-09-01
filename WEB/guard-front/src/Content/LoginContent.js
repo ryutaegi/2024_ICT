@@ -9,7 +9,7 @@ import UsernameChangeModal from './Modal/UsernameChangeModal';
 import DarkToggle from '../component/DarkToggle.js';
 import Map3DObject from '../map/Map3DObject.js';
 import VerticalSlider from '../component/VerticalSlider.js';
-import LoginComponent from '../component/LoginComponent';
+import LogComponent from '../component/LogComponent';
 import HorizontalToggle from '../component/HorizontalToggle';
 
 const sizes = {
@@ -207,7 +207,7 @@ clearInterval(interval);
 		</Items>
 		<Items dark={user.dark} color={state.color} isMobile={user.isMobile}>
 		log
-		<LoginComponent sensorData={sensorData}/>
+		<LogComponent sensorData={sensorData}/>
 	<div>
 	{roomStatus}
       </div>
