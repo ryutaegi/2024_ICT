@@ -11,7 +11,7 @@ import Map3DObject from '../map/Map3DObject.js';
 import VerticalSlider from '../component/VerticalSlider.js';
 import LogComponent from '../component/LogComponent';
 import HorizontalToggle from '../component/HorizontalToggle';
-
+import RealTimeChart from '../component/RealTimeChart'
 const sizes = {
 	desktop :1024,
 	tablet : 768
@@ -192,6 +192,9 @@ clearInterval(interval);
   const updatePosition = () => {
     setCoords({ latitude: 37.63160, longitude: 127.07691, yaw : 0.6 });
   };
+const initialData = [10, 20, 30]; // 초기 데이터
+  const initialLabels = ['10:00', '10:01', '10:02']; // 초기 라벨
+  const updateInterval = 2000; // 2초마다 업데이트
 
 	return (
 		<Container dark={user.dark}>
@@ -205,6 +208,11 @@ clearInterval(interval);
 
 		<Map3DObject latitude={coords.latitude} longitude={coords.longitude} yaw={coords.yaw}/>
 		</Items>
+		
+		<Items dark={user.dark} color={state.color} isMobile={user.isMobile}>
+		<RealTimeChart data={initialData} labels={initialLabels} updateInterval={updateInterval} />
+		</Items>
+
 		<Items dark={user.dark} color={state.color} isMobile={user.isMobile}>
 		log
 		<LogComponent sensorData={sensorData}/>

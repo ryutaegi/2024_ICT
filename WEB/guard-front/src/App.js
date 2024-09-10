@@ -2,7 +2,6 @@ import logo from './logo.svg';
 import './App.css';
 import Header from './Header/Header.js';
 import Content from './Content/Content.js';
-import Footer from './Footer/Footer.js';
 import { Route, Routes } from 'react-router-dom';
 import Layout from './Layout.js';
 import Login from './Login.js';
