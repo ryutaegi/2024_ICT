@@ -200,28 +200,32 @@ clearInterval(interval);
   };
 const initialData = [10, 20, 30]; // 초기 데이터
   const initialLabels = ['10:00', '10:01', '10:02']; // 초기 라벨
-  const updateInterval = 2000; // 2초마다 업데이트
+  const updateInterval = 100; // 0.1초마다 업데이트
 
 	return (
 		<Container dark={user.dark}>
 		<UsernameChangeModal MACid={user.MACid} setUser={setUser} isOpen={user.UsernameModal} onClose={() => setUser((prev) => ({...prev, UsernameModal : false}))}/>
 		<PasswordChangeModal MACid={user.MACid} isOpen={user.pwModal} onClose={()=> setUser((prev) => ({...prev, pwModal : false}))}/>
 		<Items isMobile={user.isMobile} dark={user.dark} color={state.color}>
-		{base64Image ?	<img src={`data:image/png;base64,${base64Image}`} style={{width : '100%', height : '100%'}}/> : 'loading' }
+		streaming
+		{base64Image ?	<img src={`data:image/png;base64,${base64Image}`} style={{width : '100%', height : '100%'}}/> : '\nloading' }
 			</Items>
 		<Items dark={user.dark} color={state.color} isMobile={user.isMobile}>
-		지도
+		map
 
 		<Map3DObject latitude={coords.latitude} longitude={coords.longitude} yaw={coords.yaw}/>
 		</Items>
 		
 		<Items dark={user.dark} color={state.color} isMobile={user.isMobile}>
-		<RealTimeChart data={initialData} labels={initialLabels} updateInterval={updateInterval} />
+		chart
+		<RealTimeChart sensorData={chartData1} line1={"p"} line2={"u2"}  updateInterval={updateInterval} />
+		<RealTimeChart sensorData={chartData2} line1={"r"} line2={"u3"}  updateInterval={updateInterval} />
+		<RealTimeChart sensorData={chartData3} line1={"v1"} line2={"v2"}  updateInterval={updateInterval} />
 		</Items>
 
 		<Items dark={user.dark} color={state.color} isMobile={user.isMobile}>
 		log
-		{JSON.stringify(chartData1)}
+		
 		<LogComponent sensorData={sensorData}/>
 	<div>
 	{roomStatus}
