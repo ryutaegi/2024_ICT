@@ -80,9 +80,12 @@ const LoginContent = () => {
 	const [user, setUser] = useContext(UserContext);
 const [controlData, setControlData] = useState([50,50,0,0,0]);
 const [sensorData, setSensorData] = useState([]);
-  
-  const [roomStatus, setRoomStatus] = useState('');
-  const [base64Image, setBase64Image] = useState('');
+const [chartData1, setChartData1] = useState([]); 
+const [chartData2, setChartData2] = useState([]);
+const [chartData3, setChartData3] = useState([]);
+
+const [roomStatus, setRoomStatus] = useState('');
+const [base64Image, setBase64Image] = useState('');
 const [pressedKey, setPressedKey] = useState('');
 
 const [coords, setCoords] = useState({ latitude: 37.63160, longitude: 127.075, yaw : 0  });
@@ -146,6 +149,9 @@ const sendControlData = () => {
 	//alert('type3 : ');
 		//alert(JSON.stringify(datas.datas));
 	setSensorData(prev=> [...prev, JSON.stringify(datas.datas)])
+	setChartData1(prev=> [...prev, [datas.datas[4], datas.datas[9]]])
+	setChartData2(prev=> [...prev, [datas.datas[3], datas.datas[10]]])
+	setChartData3(prev=> [...prev, [datas.datas[13], datas.datas[14]]])
 	setCoords({longitude : datas.datas[0], latitude : datas.datas[1], yaw : datas.datas[2]});
 	}
 	});
@@ -215,6 +221,7 @@ const initialData = [10, 20, 30]; // 초기 데이터
 
 		<Items dark={user.dark} color={state.color} isMobile={user.isMobile}>
 		log
+		{JSON.stringify(chartData1)}
 		<LogComponent sensorData={sensorData}/>
 	<div>
 	{roomStatus}
