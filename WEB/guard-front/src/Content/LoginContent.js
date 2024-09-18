@@ -30,7 +30,7 @@ const media = Object.keys(sizes).reduce((acc,label) => {
 
 const Items = styled.div`
 width : ${props => props.isMobile == true ? '80vw' : '40vw'};
-height : ${props => props.isMobile == true ? '80vw' : '42vh'};
+height : ${props => props.isMobile == true ? props.two == true ? '160vw': '80vw' : props.two == true ? '90vh' : '42vh'};
 color : white;
 overflow : hidden;
 margin-bottom : 30px;
@@ -216,7 +216,7 @@ const initialData = [10, 20, 30]; // 초기 데이터
 		<Map3DObject latitude={coords.latitude} longitude={coords.longitude} yaw={coords.yaw}/>
 		</Items>
 		
-		<Items dark={user.dark} color={state.color} isMobile={user.isMobile}>
+		<Items dark={user.dark} color={state.color} isMobile={user.isMobile} two={true}>
 		chart
 		<RealTimeChart sensorData={chartData1} line1={"p"} line2={"u2"}  updateInterval={updateInterval} />
 		<RealTimeChart sensorData={chartData2} line1={"r"} line2={"u3"}  updateInterval={updateInterval} />
