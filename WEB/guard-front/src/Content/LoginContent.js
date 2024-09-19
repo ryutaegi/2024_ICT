@@ -29,8 +29,8 @@ const media = Object.keys(sizes).reduce((acc,label) => {
 
 
 const Items = styled.div`
-width : ${props => props.isMobile == true ? '80vw' : '40vw'};
-height : ${props => props.isMobile == true ? props.two == true ? '160vw': '80vw' : props.two == true ? '90vh' : '42vh'};
+width : ${props => props.isMobile == true ? '80vw' :  props.bottom == true ? '30vw' : '40vw'};
+height : ${props => props.isMobile == true ? props.two == true ? '80vw': '80vw' : props.two == true ? '42hvh' : '42vh'};
 color : white;
 overflow : hidden;
 margin-bottom : 30px;
@@ -216,14 +216,14 @@ const initialData = [10, 20, 30]; // 초기 데이터
 		<Map3DObject latitude={coords.latitude} longitude={coords.longitude} yaw={coords.yaw}/>
 		</Items>
 		
-		<Items dark={user.dark} color={state.color} isMobile={user.isMobile} two={true}>
+		<Items dark={user.dark} color={state.color} bottom={true} isMobile={user.isMobile} two={true}>
 		chart
 		<RealTimeChart sensorData={chartData1} line1={"p"} line2={"u2"}  updateInterval={updateInterval} />
 		<RealTimeChart sensorData={chartData2} line1={"r"} line2={"u3"}  updateInterval={updateInterval} />
 		<RealTimeChart sensorData={chartData3} line1={"v1"} line2={"v2"}  updateInterval={updateInterval} />
 		</Items>
 
-		<Items dark={user.dark} color={state.color} isMobile={user.isMobile}>
+		<Items bottom={true} dark={user.dark} color={state.color} isMobile={user.isMobile}>
 		log
 		
 		<LogComponent sensorData={sensorData}/>
@@ -232,7 +232,7 @@ const initialData = [10, 20, 30]; // 초기 데이터
       </div>
 		</Items>
 		
-		<Items dark={user.dark} color={state.color} isMobile={user.isMobile}>
+		<Items dark={user.dark} color={state.color} bottom={true} isMobile={user.isMobile} >
 		<div style={{display : 'flex', flexDirection : 'row', justifyContent : "center", paddingTop : "8%"}}>
 
 		<VerticalSlider controlData={controlData} setControlData={setControlData} type={"F/B"}/>	
