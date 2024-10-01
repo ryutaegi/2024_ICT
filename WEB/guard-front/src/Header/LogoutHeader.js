@@ -101,7 +101,7 @@ const postLogin = async () => {
 	try {
             const response = await axios({
                 method: 'post',
-                url: process.env.REACT_APP_SERVER_MAIN+'/signin',
+                url: '/signin',
                 headers: {
                     'Content-Type': 'application/json'
                 },
