@@ -62,36 +62,7 @@ npm install
 npm start
 ```
 
-### 3. 테스트용 프론트엔드 (test-robot)
 
-```bash
-# 1. 디렉토리로 이동
-cd WEB/test-robot
-
-# 2. 의존성 패키지 설치
-npm install
-
-# 3. 개발 서버 실행
-# 애플리케이션은 http://localhost:5021 에서 열립니다.
-npm start
-```
-
-### 4. ROS2 워크스페이스 (ROS2_WS)
-
-ROS2 워크스페이스의 빌드 및 실행 방법은 패키지 구성에 따라 다릅니다. 일반적인 ROS2 프로젝트의 빌드 및 실행 절차는 다음과 같습니다.
-
-```bash
-# 1. ROS2 환경 설정 (사용하는 버전에 맞게 수정)
-source /opt/ros/galactic/setup.bash
-
-# 2. 워크스페이스 루트로 이동
-cd ROS2_WS
-
-# 3. 워크스페이스 빌드
-colcon build
-
-# 4. 빌드된 환경 설정
-source install/setup.bash
 
 <img width="1624" height="1056" alt="IMG_7715" src="https://github.com/user-attachments/assets/9caabb1c-ae10-41a3-b654-72ec97c2044e" />
 ![IMG_7662](https://github.com/user-attachments/assets/bc66c88c-7369-4104-840f-0ce52f5671ef)
