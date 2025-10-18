@@ -65,5 +65,3 @@ npm start
 
 
 <img width="1624" height="1056" alt="IMG_7715" src="https://github.com/user-attachments/assets/9caabb1c-ae10-41a3-b654-72ec97c2044e" />
-![IMG_7662](https://github.com/user-attachments/assets/bc66c88c-7369-4104-840f-0ce52f5671ef)
-![IMG_7596](https://github.com/user-attachments/assets/498bb5c4-2dba-4ba3-8041-632f35c0191e)
